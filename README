@@ -3,6 +3,15 @@ I am 'forced' to work on a number of different machines
 and this will be the easiest way to ensure that my progress
 doesn't get lost in the shuffling around.
 
+UoYCSProkect.cls is the project template that is required for the
+department. 
+
+Dissertation.tex is the main tex file that will hold the report.
+I will probably have each chapter in a separate tex file to make
+it easier to print out chapters individually. 
+
+All images will be placed in sub-directories (which are not yet created).
+
 Feel free to look/comment but for a while it will not be
 very interesting. 
 

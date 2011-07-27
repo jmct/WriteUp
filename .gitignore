@@ -1,0 +1,6 @@
+#Files that pdflatex creates when compiling latex source
+*.log
+*.aux
+*.out
+*.pdf
+*.toc

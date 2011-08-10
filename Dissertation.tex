@@ -36,20 +36,44 @@ macroscopic system \cite{Li}. For this reason, they are sometimes referred to as
 ??CITE RELEVANT HERE??.
 
 In this section we will look at the necessary concepts for modelling QDs, starting with basic 
-quantum mechanics and then working through an analytical solution to a `particle in a box' that
-will aid us in validating our model later on.
+quantum mechanics and then discuss some of the physical properties of quantum dots.
 
  
-\subsection{Schrodinger Equation}
+\subsection{Basics of Quantum Mechanics}
+
+\subsection{Structure of Quantum Dots}
 
 
+\section{Finite Difference Method}
+The finite difference method is one of several numerical methods that can be used in approximating
+solutions to differential equations\cite{Hamming}. We will work through the use of the finite 
+difference method and then discuss why this method was chosen over other possible alternatives. 
 
+\subsection{Background}
+The finite difference method arose due to the inherent inability of computing devices to perform
+calculations using infinitesimal calculus \cite{Hamming}\cite{zhilin}. Because taking the space
+between two points to its limit is impossible on a computer, estimates of the derivative must be
+used. 
 
-\section{Numerical Methods}
+A fundamental concept in the FDM is that of the difference operator $\Delta$. This is defined:
+on function $f$ as 
 
-\section{Matrix Representations}
+$$\Delta f(x) \equiv f(x + h) - f(x) $$
+
+An important property of the difference operator that is utilized in our implementation is that
+the operator is linear and therefore
+$$\Delta (af(x) + bg(x)) = a \Delta f(x) + b $$
+where $a$ and $b$ are constants. 
+
+Just as with infinitesimal calculus, you can preform this operation repeatedly. Using the difference
+operator twice,$\Delta \[\Delta f(X) \] \equiv \delta ^2 f(x) $, would correspond to the second derivative of the function. 
+$$ \Delta ^2 $$
+\subsection{Use with Schr\"{o}dinger Equation}
+
+\subsection{Sources of Error}
 
 \chapter{Implementation}
+
 \section{Matlab}
 
 \subsection{Linear Algebra in Matlab}
@@ -57,6 +81,7 @@ will aid us in validating our model later on.
 
 \subsection{Particle in a box}
 
+\section{Matrix Representations}
 \subsection{Sparse Matrix Representations}
 
 

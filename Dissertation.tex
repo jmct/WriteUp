@@ -51,23 +51,48 @@ difference method and then discuss why this method was chosen over other possibl
 
 \subsection{Background}
 The finite difference method arose due to the inherent inability of computing devices to perform
-calculations using infinitesimal calculus \cite{Hamming}\cite{zhilin}. Because taking the space
+calculations using infinitesimal calculus \cite{Hamming, zhilin}. Because taking the space
 between two points to its limit is impossible on a computer, estimates of the derivative must be
-used. 
+used. As a continuous representation of a function is not feasible, a function is represented
+by sampling values of the function at discrete points. The distance between these points will
+be refered to throughout this section as $h$. 
 
-A fundamental concept in the FDM is that of the difference operator $\Delta$. This is defined:
-on function $f$ as 
+First we will define the difference operator used in FDM and then see how the difference 
+operator along with the Taylor Series can be used to provide a numerical approximation of 
+functions and their derivatives. 
 
-$$\Delta f(x) \equiv f(x + h) - f(x) $$
+\subsubsection{The Difference Operator}
+A fundamental concept in the FDM is that of the difference operator $\Delta$. One
+way this is defined on function $f$ is as 
 
-An important property of the difference operator that is utilized in our implementation is that
-the operator is linear and therefore
-$$\Delta (af(x) + bg(x)) = a \Delta f(x) + b $$
+\begin{equation}
+\label{eq:forwardDiff}
+\Delta f(x) \equiv  f(x + h) - f(x)
+\end{equation}
+
+The difference operator defined in \ref{eq:forwardDiff} is known as the \emph{forward
+difference operator}. Another definition of the difference operator is the \emph{central difference operator} 
+which we will also discuss. 
+An important property of the difference operator that is utilized in our implementation is its linearity,
+ and therefore
+$$\Delta (af(x) + bg(x)) = a \Delta f(x) + b\Delta g(x) $$
 where $a$ and $b$ are constants. 
 
-Just as with infinitesimal calculus, you can preform this operation repeatedly. Using the difference
-operator twice,$\Delta \[\Delta f(X) \] \equiv \delta ^2 f(x) $, would correspond to the second derivative of the function. 
-$$ \Delta ^2 $$
+Just as with derivatives in the infinitesimal calculus, you can preform this operation repeatedly. Using the difference
+operator twice, $\Delta [\Delta f(x) ] \equiv \Delta ^2 f(x) $, would correspond to the second derivative of the function. 
+
+\begin{align}
+ \Delta ^2 f(x)&= \Delta [\Delta f(x)]  \nonumber\\
+		&= \Delta [f(x + h) - f(x)] \nonumber\\
+		&= \Delta f(x + h) - \Delta f(x) \nonumber\\  
+		&= \Delta f(x + h) - (f(x + h) - f(x)) \nonumber \\
+		&= f(x + 2h) - f(x + h) - (f(x + h) - f(x)) \nonumber \\ 
+		&= f(x + 2h) - f(x + h) - f(x + h) + f(x) \nonumber \\
+ \Delta ^2 f(x)	&= f(x + 2h) - 2f(x + h) + f(x) \label{eq:deltaSquared}
+\end{align}
+
+
+
 \subsection{Use with Schr\"{o}dinger Equation}
 
 \subsection{Sources of Error}

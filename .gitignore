@@ -4,4 +4,7 @@
 *.out
 *.pdf
 *.toc
-*.synctex.gz
+*.bbl
+*.dvi
+*.blg
+*.sh

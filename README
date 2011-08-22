@@ -12,6 +12,8 @@ it easier to print out chapters individually.
 
 All images will be placed in sub-directories (which are not yet created).
 
+.gitignore is set to ignore the files that are created when pdflatex compiles a document. 
+
 Feel free to look/comment but for a while it will not be
 very interesting. 
 

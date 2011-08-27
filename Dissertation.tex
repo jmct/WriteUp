@@ -155,6 +155,7 @@ the central difference operator we are left with
 
 \begin{equation}
 f''(x) = \frac{f(x + h) - 2f(x) + f(x - h)}{h^2}
+\label{eq:2ndDegreeDiffOp}
 \end{equation}
 
 The choice of which difference operator to use depends largely on the problem at hand \cite{Hamming, weatherley}. 
@@ -175,22 +176,108 @@ Remembering the Taylor series expansion of a function
 
 \begin{equation}
 \label{eq:taylor}
-f(x + h) = f(x) + f'(x)h+ \frac{f''(x)}{2!} + \frac{f'''(x)}{3!} + \dots
+f(x + h) = f(x) + f'(x)h+ \frac{f''(x)h^2}{2!} + \frac{f'''(x)h^3}{3!} + \dots + \frac{f^n(x)h^n}{n!} + R_{n}(x)
 \end{equation}
 
+Here $R_{n}(x)$ is the remainder term, which denotes the difference between the Taylor polynomial to the $n^{th}$ degree
+and the actual function \cite{analysis}. 
 We can `stop' the expansion at the desired derivative and solve for that derivative in order to attain an approximation. 
 For example stopping at $f(x + h) = f(x) + f'(x)h$ and solving for $f'(x)$ presents us with
 
 \begin{equation}
-f'(x) = \frac{f(x + h) - f(x)}{h}
+f'(x) = \frac{f(x + h) - f(x)}{h} - \frac{R_{1}(x)}{h}
 \label{eq:taylorForward}
 \end{equation}
 
+Since our purpose is to approximate the derivative without having the actual analytic value our approximation looks like
+
+\begin{equation}
+f'(x) \approx \frac{f(x + h) - f(x)}{h}
+\label{eq:taylorForwardApprox}
+\end{equation}
+
+This 1\textsuperscript{st} order approximation only uses one point to approximate the derivative. It is possible to use more 
+points in the approximation by using the Taylor expansion for each desired point and then using a linear combination of these
+polynomials \cite{farlow}. For example, if we required a 2\textsuperscript{nd} order approximation 
+using the central difference between two point we could do this as follows
+
+Using the Taylor expansions of two points $f(x+h)$
+$$f(x+h) \approx f(x) + f'(x)h+ \frac{f''(x)h^2}{2!}$$ 
+
+and $f(x-h)$
+$$f(x-h) \approx f(x) - f'(x)h+ \frac{f''(x)h^2}{2!}$$ 
+
+Summing these two together and solving for $f''(x)$ leaves us with
+
+\begin{equation}
+f''(x) \approx \frac{f(x + h) - 2f(x) + f(x - h)}{h^2}
+\label{eq:2ndDegreeTaylor}
+\end{equation}
+
+As we can see the result is identical to the result in \ref{eq:2ndDegreeDiffOp}. Deriving the approximations through
+the Taylor series allows a greater flexibility for customizing solutions to different problems as the approximation
+can be derived from the specified points ($f(x+h)$ and $f(x-h$ in our case). It allows extends to greater accuracy when
+more points are included in the derivation \cite{cambridge}.  
+
+\subsection{Approximating Higher Order Differential Equations with Boundary Conditions}
+Let us look at the equation 
+\begin{equation}
+\frac{\partial^2 f}{\partial^2 x} = 0
+\label{eq:partial}
+\end{equation}
+For this example we will be looking at the values between $x = 0$ and $x = 1$ making the length, $L$, $ = 1$.
+The space between points is given by the formula $$\Delta = \frac{L}{N-1} $$
+Where $N$ is the number of samples desired. 
+If we want $11$ samples this will give us $\Delta = .1$. This means that
+we will be sampling the function $f$ at discrete points in the following pattern
+
+$$f(0), f(.1), f(.2), f(.3), \dots, f(1)$$
+
+If we remember equations \ref{eq:2ndDegreeDiffOp} and \ref{eq:2ndDegreeTaylor} we can approximate the second 
+derivative of $f$ at these points
+using the function's value at that point and the adjacent points. Also remember that the second derivative
+must equal $0$ as states in equation \ref{eq:partial}. So for $f(.5)$ this would give us
+$$f''(.5) = \frac{f(.4) - 2f(.5) + f(.6)}{.1^2}  = 0$$
+
+%where $h \equiv \Delta$. 
+Each point in our sample space has an equivalent equation. Solving this set of equations will give us our approximated
+second derivative. 
+However, what happens at the edges of our specified range ($x = 0$ and $x = 1$)? Are $x = -.1$
+and $x = 1.1$ required? This is where the boundary conditions come into play. Boundary conditions define the behavior
+of the function at the edges of our sample space. 
+In our example we will set the boundaries to $f(0) = 0$ and $f(1) = 2$. So this gives us the following system of equations
+
+\begin{align}
+\frac{-2f(0)}{.1^2} + \frac{f(.1)}{.1^2} &= 0  \nonumber \\
+\frac{f(0)}{.1^2} - \frac{2f(.1)}{.1^2} + \frac{f(.2)}{.1^2} &= 0 \nonumber \\
+\frac{f(.1)}{.1^2} - \frac{2f(.2)}{.1^2} + \frac{f(.3)}{.1^2} &= 0\nonumber \\
+\vdots \hspace{.8in} &= \, \vdots \nonumber \\
+\frac{f(.8)}{.1^2} - \frac{2f(.9)}{.1^2} + \frac{f(1)}{.1^2} &= 0 \nonumber \\
+\frac{f(.9)}{.1^2} - \frac{2f(1)}{.1^2} &= 0 \nonumber
+\end{align}
+
+This system is equivalent to the following matrix equation
+
+\begin{equation}
+\frac{1}{.1^2}\begin{bmatrix}
+                -2     &   1    &     0    &     0   & \cdots & 0 \\
+                1      &  -2    &     1    &     0   & \cdots & 0 \\
+                0      &   1    &    -2    &     1   & \cdots & 0 \\
+                \vdots & \vdots &   \vdots & \vdots  & \ddots & \vdots \\
+                0      & \cdots &    0     &     0   &    1   & -2
+              \end{bmatrix} * \begin{bmatrix} 
+                                  0 \\ f(.1) \\ f(.2) \\ \vdots \\ 2  
+                              \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ \vdots \\ 0
+                                              \end{bmatrix}
+\end{equation}
 
 
 \subsection{Use with Schr\"{o}dinger Equation}
+Now that we have looked that the principles of the FDM, we can now look at how to apply it to the Schro\"{o}dinger equation.
 
 \subsection{Sources of Error}
+
+\section{Primitive Shapes}
 
 \chapter{Implementation}
 

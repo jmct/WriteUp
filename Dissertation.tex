@@ -22,25 +22,126 @@
 In this chapter we will look at and discuss some of the literature relevant to this project. 
 In order to properly understand the system being modeled we will briefly touch on quantum mechanics
 and some of the necessary mathematics. In the second section we will look at numerical methods with
-particular focus on the finite difference method\footnote{Also known as finite difference calculus.}.
+particular focus on the finite difference method.
 We will also look at various matrix representations that are present in the tools used for our
 model. 
  
 \section{Quantum Dots}
-Since being discovered\footnote{Some would say invented} in the 1970's by Leo Esaki and 
-Raphael Tsu quantum dots have been of interest to physicists and engineers for numerous applications. 
+Since being discovered in the 1970's by Leo Esaki and 
+Raphael Tsu quantum confinement in semiconductors has been of interest to physicists and engineers for numerous applications 
+\cite{dots, reed}. Having at first demonstrated quantum confinement in one dimension, it was correctly predicted that 
+confinement in two and three dimensions would be feasible \cite{dots}. A structure that exhibits 
+quantum confinement in three dimensions is known as a quantum dots (QD from now on). Quantum wires and 
+wells correspond to confinement in one and two dimensions respectively \cite{dots}. In this section we will discuss the
+background necessary to be able to model QDs. This will include a brief look at some of the underlying physics with an 
+explanation of the Schr\"{o}dinger Equation and 
+presenting the properties of QDs themselves. 
+ 
+\subsection{Basics of Quantum Mechanics (I don't think this is a good section title)}
+In classical mechanics we have the Hamiltonian operator that corresponds to the total
+energy of a system. 
+
+\begin{equation}
+        H = K + V
+\label{eq:totalEnergy}
+\end{equation}
+
+The total energy of a system is the sum of the kinetic energy ($K$) and the potential energy ($V$).
+The kinetic energy is defined using the momentum, $p$, and the mass, $m$, of the object
+
+\begin{equation}
+        K = \frac{p^2}{2m}
+\label{eq:K}
+\end{equation}
+
+In order to extend this to quantum systems we must adapt how we describe the momentum of a particle to
+fit with the wave/particle duality \cite{qp}. This is accomplished using a few of the results from the early 
+twentieth century. The Einstein's light quanta hypothesis and the de Brogile hypothesis \cite{qp, ricardo}. In 
+1905 Einstein, building on the work of Max Planck,  
+proposed the connection between the energy of a photon and its frequency $v$
+\begin{equation}
+E = hv = \hbar\omega
+\label{einsteinHyp}
+\end{equation}
+
+
+Here $\hbar$ refers to the reduced Planck constant\footnote{Also referred to as the Dirac constant it is
+the Planck constant divided by $2\pi$. The Planck constant reflects the proportion between the energy of a photon
+and the wavelength of the respective photon. Expressed in joule seconds the reduced Planck constant is 
+$1.054571726 \times 10^{-34} J \cdot s $ \cite{qp} } and $\omega = 2\pi v$, which is the same relationship
+but using angular frequency. 
+
+Almost twenty years later in 1924 de Brogile, again building on the work of Max Planck and of Einstein proposed
+the following hypothesis
+
+\begin{equation}
+p = \frac{h}{\lambda} = \hbar k 
+\label{brogileHyp}
+\end{equation}
+
+Which states that the momentum of a particle is proportional to the wavelength of that particle. Here $k$ refers to the 
+wavenumber, or $k = \frac{2\pi}{\lambda}$. Wanting to create a wave equation, Schr\"{o}dinger decided to express the plane
+wave, $\Psi$, in the trigonometric form and apply the hypotheses of Eintein and de Brogile \cite{ricardo}. 
+
+\begin{equation}
+\Psi (x, t) = e^{i(k\dot x-\omega t)}
+\end{equation}
+
+Using \ref{einsteinHyp} we are able to conclude that
+
+\begin{equation}
+E\Psi (x,t) = \hbar\omega
+\label{einsteinPart}
+\end{equation}
+
+and because $\frac{\partial\Psi}{\partial t} = -i\omega\Psi (x,t)$
+
+\begin{equation}
+E\Psi (x,t) = i\hbar\frac{\partial}{\partial t}\Psi (x,t)
+\label{einsteinPart2}
+\end{equation}
+
+We follow a similar process using the de Brogile hypothesis. Taking the second order partial derivative of
+$\Psi$ with respect to $x$ 
+
+$$\frac{\partial ^2}{\partial x^2}\Psi (x,t) = -k_{x}^{2}\Psi(x,t) $$
+
+and remembering the postulate in \ref{brogileHyp} we get
+
+\begin{equation}
+p_{x}^{2}\Psi (x,t) = (\hbar k_{x})^2\Psi (x,t) = -\hbar ^2\frac{\partial ^2}{\partial x^2}\Psi (x,t)
+\label{brogile2}
+\end{equation}
+
+This gives us the following substitution to use for our momentum,
+
+\begin{equation}
+p \rightarrow -i\hbar \nabla, p^2 \rightarrow -\hbar\nabla ^2
+\label{eq:momentumSub}
+\end{equation}
+
+$\nabla$ here is the gradient operator in $n$-dimensions. Using this substitution and the result of 
+\ref{einsteinPart2} we get the time-dependent Schr\"{o}dinger equation 
+
+
+\begin{equation}
+i\hbar\frac{\partial}{\partial t}\Psi (x,t) = -\frac{\hbar ^2}{2m}\nabla ^2 + V(x)
+\label{eq:H}
+\end{equation}
+
+
+\begin{equation}
+\nabla ^2 = \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) 
+\label{eq:laplace}
+\end{equation}
+
+
+\subsection{Structure of Quantum Dots}
 Quantum dots (QDs from this point on) are structures of semiconductors ranging between ??????
 RANGE HERE ??????. Their size and properties make them ideal in modelling atomic physics in a
 macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms 
 ??CITE RELEVANT HERE??.
 
-In this section we will look at the necessary concepts for modelling QDs, starting with basic 
-quantum mechanics and then discuss some of the physical properties of quantum dots.
-
- 
-\subsection{Basics of Quantum Mechanics}
-
-\subsection{Structure of Quantum Dots}
 
 
 \section{Finite Difference Method}
@@ -216,68 +317,122 @@ f''(x) \approx \frac{f(x + h) - 2f(x) + f(x - h)}{h^2}
 
 As we can see the result is identical to the result in \ref{eq:2ndDegreeDiffOp}. Deriving the approximations through
 the Taylor series allows a greater flexibility for customizing solutions to different problems as the approximation
-can be derived from the specified points ($f(x+h)$ and $f(x-h$ in our case). It allows extends to greater accuracy when
+can be derived from the specified points ($f(x+h)$ and $f(x-h)$ in our case). It allows extends to greater accuracy when
 more points are included in the derivation \cite{cambridge}.  
 
-\subsection{Approximating Higher Order Differential Equations with Boundary Conditions}
-Let us look at the equation 
+\subsection{Use with Schr\"{o}dinger Equation}
+Remembering the time-independent Schr\"{o}dinger equation
 \begin{equation}
-\frac{\partial^2 f}{\partial^2 x} = 0
-\label{eq:partial}
+E\psi = \hat{H}\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi \nonumber
 \end{equation}
-For this example we will be looking at the values between $x = 0$ and $x = 1$ making the length, $L$, $ = 1$.
-The space between points is given by the formula $$\Delta = \frac{L}{N-1} $$
-Where $N$ is the number of samples desired. 
-If we want $11$ samples this will give us $\Delta = .1$. This means that
-we will be sampling the function $f$ at discrete points in the following pattern
 
-$$f(0), f(.1), f(.2), f(.3), \dots, f(1)$$
+For this example we will work in only one dimension and then show how we can extend it to three dimensions. 
+In one dimension this requires finding approximations to $\frac{\partial ^2 \psi}{\partial x}$. We can set our
+sample space on the $x$ axis to have a length of $1$ starting from the origin. The space between samples of the 
+wave function is given by
+
+$$\Delta = \frac{L}{N - 1} $$
+
+Where $N$ is the number of samples we would like to use. If we choose to have $11$ samples this will give us
+$\Delta = .1$. This will give us a vector of $11$ of $\psi$ wave function samples arranged as follows 
+
+$$\begin{bmatrix} 
+        \psi _0  \\
+        \psi _{.1}  \\
+        \psi _{.2} \\
+        \vdots    \\
+        \psi _{1} 
+   \end{bmatrix}
+$$
+
 
 If we remember equations \ref{eq:2ndDegreeDiffOp} and \ref{eq:2ndDegreeTaylor} we can approximate the second 
-derivative of $f$ at these points
-using the function's value at that point and the adjacent points. Also remember that the second derivative
-must equal $0$ as states in equation \ref{eq:partial}. So for $f(.5)$ this would give us
-$$f''(.5) = \frac{f(.4) - 2f(.5) + f(.6)}{.1^2}  = 0$$
+derivative of $\psi$ at these points
+using the function's value at that point and the adjacent points. So for $\psi _{n}$ this would give us
+$$\frac{d ^2 \psi _{n}}{dx} = \frac{\psi _{n-\Delta} - 2\psi _{n} + \psi _{n+\Delta}}{\Delta ^2} $$
 
 %where $h \equiv \Delta$. 
-Each point in our sample space has an equivalent equation. Solving this set of equations will give us our approximated
-second derivative. 
+Each point in our sample space has an equivalent equation. We can of course create the following matrix representation
+
+\begin{equation}
+\frac{1}{\Delta ^2}\begin{bmatrix}
+                -2     &   1    &     0    &     0   & \cdots & 0 \\
+                1      &  -2    &     1    &     0   & \cdots & 0 \\
+                0      &   1    &    -2    &     1   & \cdots & 0 \\
+                \vdots & \vdots &   \vdots & \vdots  & \ddots & \vdots \\
+                0      & \cdots &    \cdots     &     0   &    1   & -2
+              \end{bmatrix}\cdot \begin{bmatrix} 
+                                        \psi _1  \\
+                                        \psi _{2}  \\
+                                        \psi _{3} \\
+                                        \vdots    \\
+                                        \psi _{N} 
+                                   \end{bmatrix}
+\end{equation}
+
+The dimensions of the matrix correspond to the number of samples, so for N samples the resulting matrix will be
+$N \times N$ in size. This matrix represents the kinetic energy portion of the Schr\"{o}dinger equation. Without
+any potential the kinetic energy matrix is equivalent to the Hamiltonian operator and we now have enough information
+to solve the eigenvalue problem $E\psi = \hat{H}\psi$. In order to calculate the energy of the system taking into 
+account the potential $V$ we construct a diagonal $N \times N$ matrix where the values are the potential energy at each sample
+point. Therefore, $V_{nn}$ will equal the potential at point $x_{n}$. This will take the following form
+
+\begin{equation}
+\begin{bmatrix}
+                V(x_1) &   0     &   \cdots & \cdots &     0 \\
+                0      &  V(x_2) &    0     &        &  \vdots \\
+                \vdots &   0     &   \ddots &        &  \vdots \\
+                \vdots &         &          & \ddots &     0 \\
+                0      & \cdots  &   \cdots &   0    &   V(x_N)
+              \end{bmatrix}
+\end{equation}
+
+This matrix is added to the kinetic energy matrix and then the eigenvalues are calculated. 
+
+
+ 
 However, what happens at the edges of our specified range ($x = 0$ and $x = 1$)? Are $x = -.1$
 and $x = 1.1$ required? This is where the boundary conditions come into play. Boundary conditions define the behavior
 of the function at the edges of our sample space. 
 In our example we will set the boundaries to $f(0) = 0$ and $f(1) = 2$. So this gives us the following system of equations
 
 \begin{align}
-\frac{-2f(0)}{.1^2} + \frac{f(.1)}{.1^2} &= 0  \nonumber \\
+\frac{-2(0)}{.1^2} + \frac{f(.1)}{.1^2} &= 0  \nonumber \\
 \frac{f(0)}{.1^2} - \frac{2f(.1)}{.1^2} + \frac{f(.2)}{.1^2} &= 0 \nonumber \\
 \frac{f(.1)}{.1^2} - \frac{2f(.2)}{.1^2} + \frac{f(.3)}{.1^2} &= 0\nonumber \\
 \vdots \hspace{.8in} &= \, \vdots \nonumber \\
 \frac{f(.8)}{.1^2} - \frac{2f(.9)}{.1^2} + \frac{f(1)}{.1^2} &= 0 \nonumber \\
-\frac{f(.9)}{.1^2} - \frac{2f(1)}{.1^2} &= 0 \nonumber
+\frac{f(.9)}{.1^2} - \frac{2(2)}{.1^2} &= 0 \nonumber
 \end{align}
 
 This system is equivalent to the following matrix equation
 
-\begin{equation}
-\frac{1}{.1^2}\begin{bmatrix}
-                -2     &   1    &     0    &     0   & \cdots & 0 \\
-                1      &  -2    &     1    &     0   & \cdots & 0 \\
-                0      &   1    &    -2    &     1   & \cdots & 0 \\
-                \vdots & \vdots &   \vdots & \vdots  & \ddots & \vdots \\
-                0      & \cdots &    0     &     0   &    1   & -2
-              \end{bmatrix} * \begin{bmatrix} 
-                                  0 \\ f(.1) \\ f(.2) \\ \vdots \\ 2  
-                              \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ \vdots \\ 0
-                                              \end{bmatrix}
-\end{equation}
 
 
-\subsection{Use with Schr\"{o}dinger Equation}
 Now that we have looked that the principles of the FDM, we can now look at how to apply it to the Schro\"{o}dinger equation.
 
 \subsection{Sources of Error}
 
 \section{Primitive Shapes}
+In reaching our goal of modeling quantum dots of various shapes, we must look into how shapes can be defined and used in 
+calculations. 
+
+This is where geometric primitives are useful. A geometric primitive is a `basic' building block for more complex shapes. 
+Much in the same way that substances are made up of a finite number of elements, complex shapes can be constructed using
+a finite set of primitives. 
+
+An example set of primitives for two dimensions would be
+
+\begin{itemize}
+        \item lines
+        \item points
+        \item triangles
+        \item circles
+\end{itemize}
+
+The list of primitives may seem short, but by combining these primitives in various ways we are able to define more
+complex shapes. For example, two $90^{\circ}$ isosceles triangles can be placed together at their hypotenuse to form 
+a square. In fact, triangles can be used to form any polygon. 
 
 \chapter{Implementation}
 

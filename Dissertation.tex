@@ -3,6 +3,7 @@
 \usepackage[dvipdfm]{color}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{a4wide}
+\usepackage{simpsons}
 \author{Jose Manuel Calderon}
 \title{Quantum Dots as Biosensors}
 \date{2011-September-14}
@@ -58,7 +59,8 @@ the nature of light and colours} \cite{ralph}. On the observable pattern on the 
 \begin{quote}
 The middle of the pattern is always light, and the bright stripes on each side are at such distances that the light coming to them from one of the apertures must have passed through a longer space than that which comes from the other by an interval which is equal to the breadth of one, two, three, or more of the supposed wavelengths, while the intervening dark spaces correspond to a difference of half a supposed wavelength, of one and a half, of two and a half, or more.
 \end{quote}
- 
+
+
 In modern versions of the experiment, two parallel slits are used in place of the pinholes but most of the experimental setup 
 is the same. We can now take a look at the experiment itself and further examine some of its implications. 
 
@@ -459,9 +461,42 @@ Now that we have looked that the principles of the FDM, we can now look at how t
 
 \subsection{Sources of Error}
 
-\section{Primitive Shapes}
+\section{Representation of Shapes}
 In reaching our goal of modeling quantum dots of various shapes, we must look into how shapes can be defined and used in 
-calculations. 
+calculations. There are several methods and techniques in the representation of three dimensional shapes on a computer. 
+Computer graphics deals with the representation of shapes to a great degree, with many sophisticated techniques having been 
+developed for 3D-modeling, computer aided design (CAD), and computer gaming to name a few. Our purposes may not require
+many of the sophisticated techniques that others have developed as we only require sufficient information to determine if
+a point is inside or outside of a given shape. 
+
+In the first subsection we will look at some of the prevailing techniques for representing shapes on a computer. Then we will 
+look at our chosen method in greater depth. 
+
+\subsection{Possible Representations}
+Researchers have developed many methods for representing shapes in computation. Generally a distinction is made between what is 
+known as \emph{raster graphics} and \emph{vector graphics} \cite{bors}; for ease of understanding we will look at these two 
+paradigms in two dimensions and then explain how they can expand to three. 
+
+\subsubsection{Raster Graphics}
+Raster graphics are relatively simple to understand, but can become quite complicated for certain purposes. At its most basic, 
+a two dimensional raster graphic is simply a grid made up of discrete cells (also called pixels) that are individually colored.  
+Each cell withing the grid has an associated value. Depending on the coloring scheme in place the value determines the 
+color of the associated cell. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.7]{figures/rasterSquare.eps}
+    \caption{Raster graphic depicting an empty and a filled square}
+  \label{rasterSquare}
+\end{figure}
+
+In the case of figure \ref{rasterSquare} each cell is defined by a single bit where \verb+1+ colors the cell black and
+\verb+0+ colors the cell white\footnote{In many cases, such as in a monochromatic LCD screens, it would simply be 
+`on' and 'off' for 
+each pixel}. 
+
+
+\subsection{Geometric Primitives}
 
 This is where geometric primitives are useful. A geometric primitive is a `basic' building block for more complex shapes. 
 Much in the same way that substances are made up of a finite number of elements, complex shapes can be constructed using

@@ -45,7 +45,7 @@ exhibit the properties of particles and waves \cite{qp}.
 
 \subsubsection{Background}
 Before the beginning of the nineteenth century there had been an ongoing debate regarding the nature of light. While
-several scientists, principally Leohnard Euler advocated the theory that light behaved in a wave-like manner, the prevailing 
+several scientists, principally Leohnard Euler, advocated the theory that light behaved in a wave-like manner, the prevailing 
 idea was Newton's corpuscular\footnote{A minute body or particle.} theory of light \cite{history}. While Newton himself admitted 
 that viewing light as particles was not able to explain certain known properties of light; such as why two beams of light
 can cross without the particles `hitting' each other off course. Still not satisfied, scientists searched for experiments that
@@ -73,8 +73,13 @@ barrier with two small parallel slits that will sit between the light source and
 
 \paragraph{What we think should happen}
 Let us take a moment to think about what would intuitively happen to the light passing through the two slits and reaching the
-optical screen. If there was only one slit, we would see a band of light approximately the size of the slit where the light was
-able to pass through the slit and shine on the optical screen. 
+optical screen. First, if there was only one slit, we would expect that a band of light approximately the shape of the slit would 
+appear on the optical screen. As this is indeed what occurs we would surmise that with two slits we would observe two bands of
+light on the optical screen. As intuitive as that may seem, the actual result of the experiment produces a very different result.
+
+\paragraph{What actually happens}
+
+
 
 \subsection{Basics of Quantum Mechanics (I don't think this is a good section title)}
 In classical mechanics we have the Hamiltonian operator that corresponds to the total
@@ -485,18 +490,60 @@ color of the associated cell.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.7]{figures/rasterSquare.eps}
+  \includegraphics[scale=1.0]{figures/rasterSquare.eps}
     \caption{Raster graphic depicting an empty and a filled square}
   \label{rasterSquare}
 \end{figure}
 
 In the case of figure \ref{rasterSquare} each cell is defined by a single bit where \verb+1+ colors the cell black and
 \verb+0+ colors the cell white\footnote{In many cases, such as in a monochromatic LCD screens, it would simply be 
-`on' and 'off' for 
-each pixel}. 
+`on' and 'off' for each pixel}. This allows the description of an image to be stored as a matrix of values in memory. 
+The matrix for the image in \ref{rasterSquare} would look as follows
 
+\begin{verbatim}
+                0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                0 1 1 1 1 1 1 0 0 0 0 1 1 1 1 1 1 0
+                0 1 0 0 0 0 1 0 0 0 0 1 1 1 1 1 1 0
+                0 1 0 0 0 0 1 0 0 0 0 1 1 1 1 1 1 0
+                0 1 0 0 0 0 1 0 0 0 0 1 1 1 1 1 1 0
+                0 1 0 0 0 0 1 0 0 0 0 1 1 1 1 1 1 0
+                0 1 1 1 1 1 1 0 0 0 0 1 1 1 1 1 1 0
+                0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+\end{verbatim}
 
-\subsection{Geometric Primitives}
+Not surprisingly, this method is commonly referred to as a \emph{bitmap}, although this has also become a way to 
+reference any raster image that has not undergone any form of compression. 
+For monochromatic images this system is extremely straight-forward. Displaying the image is a matter of iterating through
+the representation in memory and setting the pixels accordingly. For color images we would not be able to use bit values for
+each cell and instead would need to store the appropriate convention for that particular format. A common convention is to store
+eight bits for each color component; Red, Green, and Blue (RGB)\footnote{More modern representations also include and `Alpha'
+component for the level of transparency.}. This gives over 16 million different possible colors. In some image processing
+toolkits such as \verb+MATLAB+ store each component in a separate matrix so as to facilitate processing the individual components
+separately. 
+
+For our purposes a simple bitmap would be sufficient to represent the
+\emph{in} or \emph{out} information we require for each QD. Representing a QD would be a matter of 
+storing a three dimensional matrix (for the spacial dimensions) and setting the bits that are within
+the Quantum Dot to \verb+1+ and leaving all the other bits at \verb+0+. This trivializes the process of 
+determining when a sample point is withing the quantum dot or not as it is encoded into the definition of 
+each shape. However, there are two main
+issues that make raster images less suitable for our purposes. Raster images are resolution dependent. This means that
+each image is specific at a specific resolution and that scaling the image to different resolutions is not possible in a 
+straightforward way, usually (read almost always) resulting in loss of quality in the resolution. For example, let us
+create a representation of a circle in a $10x10$ grid
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=1.0]{figures/rasterCircle.eps}
+    \caption{Circle in raster representation, with a red outline of the ``true'' circle}
+  \label{rasterCircle}
+\end{figure}
+
+In \ref{rasterCircle} we have superimposed a red circle on the image to better illustrate the actual dimensions of the circle. 
+Without the mathematical representation of the circle (what is in red), we would not know how to scale this image if instead of
+$10x10$ we chose to use a $20x20$ grid. This is because the ``true'' shape of the circle is lost in the raster representation.  
+
+\subsection{Geometric Primitives (Vector Graphics)}
 
 This is where geometric primitives are useful. A geometric primitive is a `basic' building block for more complex shapes. 
 Much in the same way that substances are made up of a finite number of elements, complex shapes can be constructed using

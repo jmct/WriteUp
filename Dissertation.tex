@@ -4,6 +4,7 @@
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{a4wide}
 \usepackage{simpsons}
+\usepackage{subfig}
 \author{Jose Manuel Calderon}
 \title{Modeling Quantum Dots Using Geometric Primitives}
 \date{2011-September-14}
@@ -196,6 +197,25 @@ RANGE HERE ??????. Their size and properties make them ideal in modelling atomic
 macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms 
 ??CITE RELEVANT HERE??.
 
+\subsubsection{Potential Wells}
+
+\begin{figure}[h]
+  \centering
+  \subfloat[Model potential well]{\includegraphics[scale=0.7]{figures/fakeWell.eps}}
+  \hspace{0.5 in}
+  \subfloat[With realistic potential well]{\includegraphics[scale=0.7]{figures/realWell.eps}}
+    \caption{Difference between the assumed potential well and the more ``realistic'' well}
+    \label{potWells}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \subfloat[With no electric field]{\includegraphics[scale=0.7]{figures/fakeWell.eps}}
+  \hspace{0.5 in}
+  \subfloat[With electric field]{\includegraphics[scale=0.7]{figures/fakeFieldWell.eps}}
+    \caption{How the potential well is affected by the presence of an electric field}
+\end{figure}
 
 
 \section{Finite Difference Method}
@@ -564,10 +584,19 @@ complex shapes. For example, two $90^{\circ}$ isosceles triangles can be placed 
 a square. In fact, triangles can be used to form any polygon. 
 
 \chapter{Design and Implementation}
-Now that we've looked at the necessary background information we can contstuct a program that will 
+Now that we've looked at the necessary background information we can construct a program that will 
 compute our numerical approximations. First we will look at how to represent our geometric primitives 
 and how to construct the potential energy matrix from a set of shapes. We can then easily construct
-the matrix for the kinetic energy. 
+the matrix for the kinetic energy. After we have looked at the basic construction of the program, we 
+will look at using sparse matrix representations in order to keep the memory usage as small as possible.
+
+\section{Potential Energy Matrix}
+In this section we will focusing on the implementation of the setup of the potential energy matrix
+from the Sch\"{o}dinger equation, or $V$ from $E\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi $.
+
+The potential energy depends on the shape of the quantum dot, and the electric field present (if any). 
+%We should reference back to the diag
+
 
 
 \section{Matlab}

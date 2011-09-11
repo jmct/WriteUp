@@ -209,6 +209,7 @@
   \microtypesetup{protrusion=false}%
   \tableofcontents%  
   \microtypesetup{protrusion=true}%
+  \listoffigures
 }
 
 \AtBeginDocument{%

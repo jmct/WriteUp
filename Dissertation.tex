@@ -5,6 +5,18 @@
 \usepackage{a4wide}
 \usepackage{simpsons}
 \usepackage{subfig}
+\usepackage{moreverb}
+\usepackage{listings}
+\lstset{language=Matlab,
+label=DescriptiveLabel,
+basicstyle=\small,
+stringstyle=\ttfamily,
+showstringspaces=false,
+tabsize=2,
+breaklines=true,
+numbers=left
+}
+
 \author{Jose Manuel Calderon}
 \title{Modeling Quantum Dots Using Geometric Primitives}
 \date{2011-September-14}
@@ -41,7 +53,9 @@ presenting the properties of QDs themselves.
 
 \subsection{The Double Slit Experiment}
 Before we dive into the Schr\"{o}dinger equation let us take a look at one of the most fundamental experiments in
-quantum mechanics, the double slit experiment. This experiment illuminates the fact that both matter and energy 
+quantum mechanics, the double slit experiment. While this section is not intended to cover all of the implications
+of the double-slit experiment, it should give a basic understanding of the experiment and the reasons the experiment
+helped shape our understanding of quantum mechanics. This experiment illuminates the fact that both matter and energy 
 exhibit the properties of particles and waves \cite{qp}. 
 
 \subsubsection{Background}
@@ -79,11 +93,32 @@ appear on the optical screen. As this is indeed what occurs we would surmise tha
 light on the optical screen. As intuitive as that may seem, the actual result of the experiment produces a very different result.
 
 \paragraph{What actually happens}
-Interestingly, the pattern of light that is projected on to the optical screen is significantly different than the two bands of light we 
-would expect to see. The observed pattern is what is known as an interference pattern. 
+Interestingly, the pattern of light that is projected on to the optical screen is significantly different than the two 
+bands of light we 
+would expect to see. The observed pattern is what is known as an interference pattern. Figure \ref{fig:patterns}
+shows the distribution of light on the optical screen for both the single and double-slit experiments.  
+
+\begin{figure}
+\centering
+\subfloat[Single-slit pattern]{\includegraphics[scale=0.30]{figures/singleSlit.eps}}
+\subfloat[Double-slit pattern]{\includegraphics[scale=0.30]{figures/doubleSlit.eps}}
+\caption{Single and double-slit patterns}
+\label{fig:patterns}
+\end{figure}
 
 
-\subsection{Basics of Quantum Mechanics (I don't think this is a good section title)}
+ \subsubsection{Consequences}
+As this ran counter to the conventional wisdom of the time, it forced physicists to reevaluate the propagation
+properties of light. The interference pattern lead physicists to draw similarities between the light and the propagation of 
+waves. This ultimately resulted in the acceptance of light's particle/wave duality \cite{ralph}. Building on these findings
+has lead to the modern understanding of quantum mechanics, and was the foundation that lead to the Schr\"{o}dinger equation, 
+which is the equation we have used to model quantum dots. 
+
+\subsection{The Schr\"{o}dinger Equation}
+The Schr\"{o}dinger equation is of up most importance in physics since the beginning of the 20th Century. Solutions
+to this equation can be used to describe systems ranging from the subatomic to the molecular and macroscopic. In this
+section we will go over the foundation of the equation and produce the form to be used in our model. 
+
 In classical mechanics we have the Hamiltonian operator that corresponds to the total
 energy of a system. 
 
@@ -175,6 +210,29 @@ i\hbar\frac{\partial}{\partial t}\Psi (x,t) = -\frac{\hbar ^2}{2m}\nabla ^2 + V(
 \label{eq:H}
 \end{equation}
 
+By assuming a trivial time dependence we can obtain the time-independent Schr\"{o}dinger equation. This replaces
+the $i\hbar \frac{\partial}{\partial t}$ in \ref{eq:H} with $E$. With the wavefunction also having a trivial time
+dependence we arrive at
+
+\begin{equation}
+E\psi = -\frac{\hbar ^2}{2m}\nabla ^2 + V(x) 
+\label{eq:timeIndependent}
+\end{equation}
+
+
+Or
+
+\begin{equation}
+E\psi = \hat{H}\psi  
+\label{eq:eigenSchrodinger}
+\end{equation}
+
+The time-independent Schr\"{o}dinger equation is therefore and eigenvalue equation. It is this form of the
+Schr\"{o}dinger equation that is being used to model quantum dots in this report. 
+The real eigenvalue solutions to this equation are the energy levels
+of the particle. These energy levels give us spectral information about the system being modeled. 
+
+
 It is important to note at this point that the Schr\"{o}dinger equation does not have a mathematically rigorous 
 derivation or proof. It is a heuristic derivation based on the hypotheses of Einstein and de Brogile and Schr\"{o}dinger's
 desire to construct a wave equation that addresses the wave-particle duality \cite{ricardo, qp}. %CITE MORE HERE OMG OMG OMG PLEASE
@@ -185,37 +243,71 @@ to find an analytical solution to the hydrogen atom that correctly predicted the
 and only the distance from the nucleus is needed. Sch\"{o}dinger's equation has been used to find solutions to other atoms and
 molecules, but usually analytical solutions are infeasible and the solutions are computed numerically. 
 
-\begin{equation}
-\nabla ^2 = \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) 
-\label{eq:laplace}
-\end{equation}
+%\begin{equation}
+%\nabla ^2 = \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) 
+%\label{eq:laplace}
+%\end{equation}
 
 
-\subsection{Structure of Quantum Dots}
+
+\subsection{Properties of Quantum Dots}
 Quantum dots (QDs from this point on) are structures of semiconductors ranging between ??????
 RANGE HERE ??????. Their size and properties make them ideal in modeling atomic physics in a
 macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms 
 ??CITE RELEVANT HERE??.
 
 \subsubsection{Potential Wells}
-Quantum dots confine free carriers in all three dimension. In order to understand the implications
-of this we will look at how confinement is described by using \emph{potential wells}. A potential
-well is an area of low potential (A) surrounded by areas of much higher potentials (B). The difference 
-in potentials is great enough that the wavefunction of a particle in A would be zero anywhere in B, i.e.
-the particle is \emph{confined} to area A. Figure \ref{potWells} illustrates an approximate ``shape'' of
-an infinitely deep potential well in part (a) and how that corresponds to how physicist sometimes model
-the same well when performing calculations \cite{dots, qp}.
-
 
 \begin{figure}[h]
   \centering
-  \subfloat[Model potential well]{\includegraphics[scale=0.7]{figures/realWell2.eps}}
+  \subfloat[Potential well]{\includegraphics[scale=0.7]{figures/realWell2.eps}}
   \hspace{0.5 in}
-  \subfloat[With realistic potential well]{\includegraphics[scale=0.7]{figures/realWell.eps}}
+  \subfloat[With approximate model]{\includegraphics[scale=0.7]{figures/realWell.eps}}
     \caption{Difference between the assumed potential well and the more ``realistic'' well}
     \label{potWells}
 \end{figure}
 
+Quantum dots confine free carriers in all three dimension. In order to understand the implications
+of this we will look at how confinement is described by using \emph{potential wells}. A potential
+well is an area of low potential (a) surrounded by areas of much higher potentials (b). The difference 
+in potentials is great enough that the wavefunction of a particle in $A$ would be zero anywhere in $B$\footnote{
+remember that the wavefunction is a separate concept from the potential energy}, i.e.
+the particle is \emph{confined} to area $A$. Figure \ref{potWells} illustrates an approximate ``shape'' of
+an infinitely deep potential well in part (a) and how that corresponds to how physicist sometimes model
+the same well when performing calculations \cite{dots, qp}. If area $A$ was defined in the $x$ dimension
+then $V(x)$ would be
+
+\begin{equation}
+V(x) = \begin{cases}
+          0 & \text{if $x$ is in $A$}  \\
+          \infty    & \text{if $x$ is not in $A$} 
+         \end{cases}
+\label{vx}
+\end{equation}
+
+
+Using the model in part (b) of figure \ref{potWells} allows us to have a trivially identifiable well where confinement
+takes place. This the method with which physicists tackle analytical solutions to the Schr\"{o}dinger equation 
+such as the ``particle in a box'' condition that we will investigate in a later section \cite{datta, qp, dots}.  
+As mentioned earlier, when in a potential well the wavefunction of a particle cannot have enough energy to be present
+outside of the well. This means that all possible wavefunctions are \emph{standing waves}\footnote{Standing
+waves have a wavelength defined by $\frac{2l}{n}$ where $l$ is the length of the confinement and $n$ is a positive integer. 
+Not all wavelengths can exist in an infinite well because the wavefunction must be zero at the boundaries.} in the confined area.
+
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=1]{figures/confined.eps}
+ \caption{Standing waves in a infinite potential well}
+\label{confined}
+\end{figure}
+
+
+
+
+When an electric field is present, the potential well changes in proportion to the direction and intensity of the
+electric field. In figure \ref{fieldWell} we illustrate the effects of an electric field in the $x$ direction on 
+the model potential well.
 
 \begin{figure}[h]
   \centering
@@ -223,7 +315,32 @@ the same well when performing calculations \cite{dots, qp}.
   \hspace{0.5 in}
   \subfloat[With electric field]{\includegraphics[scale=0.7]{figures/fakeFieldWell.eps}}
     \caption{How the potential well is affected by the presence of an electric field}
+  \label{fieldWell}
 \end{figure}
+
+This means that when the potential well is in an electric field we must also take into account the 
+slope of the electric field when determining the potential energy for a point within $A$. In the one 
+dimensional case the potential energy is defined as a line with a slope that grows proportionally 
+with the intensity of the electric field. This changes our equation \ref{vx} to
+
+\begin{equation}
+V(x) = \begin{cases}
+          mx & \text{if $x$ is in $A$}  \\
+          \infty    & \text{if $x$ is not in $A$} 
+         \end{cases}
+\label{vx2}
+\end{equation}
+
+Where $m$ is the slope of the line defining the electric field. We derived $m$ in our models by
+taking the maximum value of the electric field and dividing it by the length of the dimension 
+the electric field is acting on. By ensuring that the electric field was only acting on the $x$ dimension
+we get
+
+$$m = \frac{\text{Max(Electric Field)}}{L_x}$$
+
+\subsection{Confinement in 3D = Quantum Dots}
+Now that we have an understanding of potential wells in one dimension we can easily expand this to higher
+dimensionality. 
 
 
 \section{Finite Difference Method}
@@ -403,6 +520,7 @@ can be derived from the specified points ($f(x+h)$ and $f(x-h)$ in our case). It
 more points are included in the derivation \cite{cambridge}.  
 
 \subsection{Use with Schr\"{o}dinger Equation}
+\label{sec:useWithSchro}
 Remembering the time-independent Schr\"{o}dinger equation
 \begin{equation}
 E\psi = \hat{H}\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi \nonumber
@@ -450,6 +568,7 @@ Each point in our sample space has an equivalent equation. We can of course crea
                                         \vdots    \\
                                         \psi _{N} 
                                    \end{bmatrix}
+\label{eq:kinetic}
 \end{equation}
 
 The dimensions of the matrix correspond to the number of samples, so for N samples the resulting matrix will be
@@ -467,6 +586,7 @@ point. Therefore, $V_{nn}$ will equal the potential at point $x_{n}$. This will 
                 \vdots &         &          & \ddots &     0 \\
                 0      & \cdots  &   \cdots &   0    &   V(x_N)
               \end{bmatrix}
+\label{eq:potential}
 \end{equation}
 
 This matrix is added to the kinetic energy matrix and then the eigenvalues are calculated. 
@@ -598,6 +718,83 @@ and how to construct the potential energy matrix from a set of shapes. We can th
 the matrix for the kinetic energy. After we have looked at the basic construction of the program, we 
 will look at using sparse matrix representations in order to keep the memory usage as small as possible.
 
+\section{Sparse Matrix Representations}
+The implementation that is described in this chapter uses \emph{sparse matrix} representations of the
+kinetic and potential energy matrices. In this section we will explain how sparse matrices work and the advantages
+they allow for certain problems such as our own. 
+
+A sparse matrix is one in which most of its values will be zero. Because the non-zero values are arrange `sparsely'
+storing all the elements of the matrix is seen as wasteful. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{figures/sparseVisual.eps}
+\caption{The colored dots are the non-zero elements of the sparse matrix}
+\label{sparseExample}
+\end{figure}
+
+Figure \ref{sparseExample} displays a $[35 \times 35]$ matrix where most of the elements are zero. Using memory
+to store the empty parts of the matrix is unnecessary, it would be much more efficient to store only the location 
+and value of the non-zero elements. This is exactly what sparse matrix representation accomplishes. 
+
+At its core, the sparse matrix representation of a matrix is stored as 3 vectors. Two vectors store the 
+indices of the non-zero elements, while the third vector stores the value of those elements. 
+
+\begin{equation}
+\begin{array}{c c c}
+X\text{ Index} & Y\text{ Index} & \text{Value} \\
+\begin{bmatrix} 
+                1 \\
+                2 \\
+                2 \\
+                3 \\ \end{bmatrix} & \begin{bmatrix}          
+                                           1 \\
+                                           1 \\
+                                           2 \\
+                                           3 \\ \end{bmatrix} & \begin{bmatrix}
+                                                                        5 \\
+                                                                        -1 \\
+                                                                         4 \\
+                                                                          6 \\
+                                                                \end{bmatrix}
+\end{array}
+\label{eq:sparse}
+\end{equation}
+
+The three vectors in \ref{eq:sparse} define the following matrix
+
+\begin{equation}
+\begin{bmatrix}
+5   & 0  & 0 \\ 
+-1  & 4  & 0 \\
+ 0  & 0  & 6 \\
+\end{bmatrix}
+\end{equation}
+
+In \verb+MATLAB+ we can define sparse matrices using the \verb+sparse+ function. The parameters passed to the function
+are the three vectors that define the matrix. 
+In order to define a sparse matrix that has elements only along the diagonal (much like we will do with the potential
+energy matrix), the vectors that define the indices will both be an $n$ element long vector from $1$ to $n$ where $[n \times n]$
+is the size of the matrix. Therefore executing \verb+sparse(1:n,1:n,1)+ in \verb+MATLAB+ will create an $[n \times n]$ sparse
+identity matrix. It is also possible to pass an entire matrix to the \verb+sparse+ function. This will return an new sparse
+matrix version of the passed matrix. 
+
+\subsubsection{Advantages for our implementation}
+The size of the potential and kinetic energy matrices correspond to the number of sample points in the system. 
+Because we will be using a sample cube (where the number of samples is the same in all dimensions) this means
+that is we desire a sample size of $n$ per dimension, we have $n^3$ total sample points in the system. The 
+matrices that represent the system will always have one column and one row for each sample point. This gives
+us $n^D \times n^D$ sized matrices, where $D$ is equal to the number of dimensions. 
+
+If the simulation was a one dimensional problem
+using the sparse representation would not be as crucial. Even using $n = 500$ nets us a kinetic energy matrix of
+$500 \times 500$ which is very manageable in memory. It is because we are modeling a three dimensional system that
+necessitates the use of sparse matrices for both the kinetic and potential energy matrices which will both be
+$n^3 \times n^3$, so even smaller sample rates such as $n = 50$ produces matrices on the order of $125000 \times 125000$.
+
+
+
+
 \section{Potential Energy Matrix}
 In this section we will focusing on the implementation of the setup of the potential energy matrix
 from the Sch\"{o}dinger equation, or $V$ from $E\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi $.
@@ -607,15 +804,491 @@ The potential energy depends on the shape of the quantum dot, and the electric f
 
 
 
-\section{Matlab}
+Each point the sample cube must be iterated through in order to determine whether it is within the QD. 
+Because the diagonal of the potential matrix is indexed by a single integer we must translate the 
+coordinates of a point into a unique integer value 
+that corresponds to location of each point. Additionally, we do not care about the spacing or the absolute location
+of the points in
+the sample cube, only their relative location. Therefore we count the points using a specific pattern, counting
+the samples along the x-axis until we have reached the full length. Then we increase the y-axis value and
+begin counting along the x-axis once again. Figure \ref{indexNum} illustrates a two dimensional example. 
+In order to add a third dimension it helps to think of three dimensions as a ``stack'' of  two dimensional grids,
+ensuring that you continue the index count from the end of the last grid.
 
-\subsection{Linear Algebra in Matlab}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=1.5]{figures/indexNumbering.eps}
+  \caption{Two dimensional example of numbering scheme}
+\label{indexNum}
+\end{figure}
+
+For a three dimensional sample space coordinate $(1,1,1)$ must translate to the first index, 
+$(2,1,1)$ the second and so on. If the grid in figure \ref{indexNum} was only the first layer in a three dimensional 
+space after having counted $(9,9,1)$ which is assigned index 81, you iterate to $(1,1,2)$ which would be assigned index 82.
+The following function was written to take an arbitrary coordinate and return the appropriate index.
+ 
+\begin{lstlisting}[caption={Index value from sample point},
+label=lst:coordToIndex]
+function index = coordToIndex3D(x, y, z, n)
+    index = ((z-1)*n^2) + ((y-1)*n) + x;
+end
+\end{lstlisting}
+
+By iterating through all the points in the sample cube using \verb+for+ loops we can determine the appropriate index
+for each sample. While we require a running count to determine the index of the point in the matrix, 
+we need the absolute position of each
+point in order to determine whether the point is within the QD. This can be calculated from the iterated count
+using the following
+
+\begin{lstlisting}[caption={Finding the absolute coordinates}, label=absoluteCoord, firstnumber=16]
+xVal = (x-1) * delta;
+yVal = (y-1) * delta;
+zVal = (z-1) * delta;
+\end{lstlisting}
+
+By iterating through the number of samples in each dimension we now have both the appropriate index value for the 
+potential energy matrix, and we have the absolute position of each point. Once we determine whether the sample point
+is within the QD we can assign the appropriate potential value to the correct index in $V$. 
+
+\subsection{Determining if a point is within a primitive}
+The shape of the quantum dot is made up of a set of primitives. We use a \verb+MATLAB+ cell array in order to store
+the set of primitives. For our purposes a cell array is simply an array of matrices where each matrix is the
+definition of a primitive. We pass the cell array and the current coordinates (absolute position) into a function
+that returns a boolean. Either the point is within the set of primitives or it is not. Each primitive is defined
+by a one dimensional matrix (can also be referred to as a vector). However, as the different primitives are described
+differently, they have different
+formats. In order to differentiate the primitives from each other each definition begins with an
+integer value of 1, 2, or 3. 1 corresponds to spheres, 2 corresponds to rectangular prisms, and 3 corresponds to 
+cylinders. This makes it easy for the program to determine which primitive it is currently working on and gives us the
+following format. 
+
+$$\begin{array}{r l}
+        Spheres &= [1, OriginX, OriginY, OriginZ, Radius] \\
+        Rectangular Prisms &= [2, OriginX, OriginY, OriginZ, Length, Width, Depth] \\
+        Cylinders &= [3, Point1X, Point1Y, Point1Z, Point2X, Point2Y, Point2Z, Radius] 
+  \end{array}$$
+
+\subsubsection{Points within a sphere}
+We will begin by describing how to determine whether a point is inside of a sphere. Because of their complete
+symmetry a sphere is the simplest to test out of our primitives. A sphere is defined by its origin ($(x,y,z)$)
+and its radius. A given point is within the sphere if the euclidean distance from that point to the origin of
+the sphere is less than or equal to the radius of the sphere. The \verb+MATLAB+ code for this is very simple.
+
+\begin{lstlisting}[caption={Determining if a given point is in a given sphere}, label=lst:sphere]
+function isIn = isInSphere(x,y,z, sphr)
+	
+        dst = sqrt((x-sphr(1))^2 + (y-sphr(2))^2 + (z-sphr(3))^2);
+        if (dst <= sphr(4))
+                isIn = 1;
+        else
+                isIn = 0;
+        end
+end
+\end{lstlisting}
+
+\subsubsection{Points within a cylinder}
+The manner in which we define cylinders is quite simple, two points are used to define the center line of the
+cylinder and a radius is used to define the area around the center line. If a point is within the two ends of the
+cylinder all we need to check is the distance from the center line and compare that to the radius. Conversely, if the
+point is outside of the two end points it is not in the cylinder. In order to accomplish this we use the parametric
+equations of the center line. 
+
+\paragraph{Parametric Equations of a Line}
+Given two points, $P1(x,y,z)$ and $P2(x,y,z)$, the parametric equations for the line that passes through the two points
+is defined as
+
+\begin{equation}
+\begin{array}{r l}
+x(t) &= P1(x) + t * (P2(x) - P1(x)) \\
+y(t) &= P1(y) + t * (P2(y) - P1(y)) \\
+z(t) &= P1(z) + t * (P2(z) - P1(z)) 
+\label{eq:paramet}
+\end{array}
+\end{equation}
+
+This gives us a single parameter, $t$, that describes any point on the line. If $t = 0$ you can see that the
+point is $P1$, and if $t = 1$ the point is then $P2$, this means that any point on the center line within the cylinder
+will satisfy 
+
+\begin{equation}
+0 \leq t \leq 1 
+\label{eq:tBoundary}
+\end{equation}
+
+Given a third point $P3$ we can use dot products to 
+project $P3$ onto the line and get the minimum value for $t$, which corresponds to the point on the line 
+that is closest to $P3$. 
+
+\begin{equation}
+t = \frac{P3 \cdot (P2 - P1) - P1 \cdot (P2 - P1)}{(P2 - P1) \cdot (P2 - P1)}
+\label{eq:dotProd}
+\end{equation}
+
+Here $A \cdot B$ is the dot product of $A$ and $B$. 
+
+Once we have $t$ we can do our first check. Remembering that $t$ must satisfy the constraint in \ref{eq:tBoundary} 
+to have any possibility
+of being within the cylinder, we can forgo any further work if the constraint is not satisfied. If $t$ does fall within the
+boundaries of the center line we must compute the distance from the projected point to $P3$. The projected point is
+found by entering our $t$ value into the parametric equation \ref{eq:paramet} and then calculating the euclidean
+distance between the two points. If the distance is within the defined radius then the point is within the cylinder. 
+
+This was all accomplished using the following function. 
 
 
-\subsection{Particle in a box}
+\begin{lstlisting}[caption={Finding if a point is within a cylinder}, label=lst:isInCyl]
+function isIn = isInCylinder(x,y,z, cyl)
+	
+        cylRange = cyl(4:6) - cyl(1:3);
+        t_min = ( (dot([x,y,z], cylRange) - dot(cyl(1:3), cylRange))... 
+                        / dot(cylRange, cylRange));
+        
+        if (t_min < 0 || t_min > 1)
+                isIn = 0;
+                return;
+        end
+        
+        pointOnLine = parametricPoint(cyl, t_min);
+        difference = [x,y,z] - pointOnLine;
+        distFromLine = sqrt( dot(difference, difference));
+        
+        if (distFromLine > cyl(7))
+                isIn = 0;
+        else
+                isIn = 1;
+        end
 
-\section{Matrix Representations}
-\subsection{Sparse Matrix Representations}
+        function p = parametricPoint(cyl, t)
+                p = zeros(size(cyl(1:3)));
+                
+                cylRange = cyl(4:6) - cyl(1:3);
+                p(1) = cyl(1) + t * cylRange(1);
+                p(2) = cyl(2) + t * cylRange(2);
+                p(3) = cyl(3) + t * cylRange(3);
+        end		
+end
+\end{lstlisting}
+
+Because only cylinders required the $t$ value to be translated into the actual point the function 
+\verb+parametricPoint(cyl, t)+ was written as a private function within the body of \ref{lst:isInCyl}.
+
+\subsubsection{Points in a Rectangular Prism}
+We can apply many of the same principles we used in testing points in a cylinder to points in a rectangular prism.
+Having a corner point (defined as the origin) and the length of each dimension we have enough information to make a
+parametric equation for the three lines that intersect the origin. The main difference between using parametric 
+equations for the rectangular prism and the cylinder is that we only need to test that $t$ is within the constraints 
+in \ref{eq:tBoundary} for each dimension. We can illustrate this easily using a two-dimensional example
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=1.2]{figures/recPrism.eps}
+  \caption{Points projected onto the sides that intersect the origin}
+\label{recPrism}
+\end{figure}
+
+Because we need two points for each line segment to be defined by a set of parametric equations we must add the
+width, height, and depth to the origin to get the necessary three points. Each new point defines a line segment 
+that intersects with the origin. We then project the test point onto each of these lines. As with cylinders,
+if any of these projections lie outside of the line segment then the point cannot possibly be within the prism. 
+The test point must have a $t$ value that satisfies the constraint in \ref{eq:tBoundary} for \emph{each} line segment
+to be within the prism. In the two-dimensional example shown in figure \ref{recPrism}, $P4$ satisfies the constraint
+for both line segments while $P5$ does not. Therefore, as is visually apparent, $P4$ lies within the square whilst 
+$P5$ does not. Because of the similarities to the function defined in \ref{lst:isInCyl} we will only list the
+important differences for our \verb+isInRecPrism+ function. At the beginning of the function we define the three needed
+points using the width, height, and depth found in the definition of the prism. 
+
+\begin{lstlisting}[caption={Implementation of finding points that lie within a rectangular prism}, label=lst:isInPrism]
+function isIn = isInRecPrism(x,y,z, recPrism)
+    
+        point2 = recPrism(1:3) + [recPrism(4), 0,0];
+        point3 = recPrism(1:3) + [0,recPrism(5), 0];
+        point5 = recPrism(1:3) + [0, 0, recPrism(6)];
+\end{lstlisting}
+
+We then calculate the $t$ value for each test point onto each of the three lines. This is done using dot products
+in the same manner it was done in \ref{lst:isInCyl}. This gives us three $t$ values, which we have named
+\verb+t_minX, t_minY,+ and \verb+t_minZ+. Using these values we can write a boolean expression to determine
+whether the point is inside the prism. As with all boolean expressions there are multiple equivalent ways
+of expressing them. In this case we chose to test for the point being \emph{outside} of the prism. Therefore
+we have a set of \verb+OR+ expressions. Because \verb+MATLAB+ short-circuits\footnote{Short circuiting a boolean 
+expression means that the runtime system will not evaluate the rest of the boolean expression once it has enough
+information to know the outcome of the overall expression. For \texttt{OR} gates, this means that if any of the
+statements is true none of the other statements need to be evaluated. For \texttt{AND} gates, if any are false
+than the entire expression is false.} boolean expressions is any of the \verb+t_min+ values are outside of the
+constraints the function indicates that the point is not within the prism and returns. 
+
+\begin{lstlisting}[caption={Boolean expression for points in a RecPrism}, label=lst:boolExpr, firstnumber=19]
+  if ((t_minX <= 0 || t_minX >= 1) || (t_minY <= 0 || t_minY >= 1) || ...
+          (t_minZ <= 0 || t_minZ >= 1) )
+       isIn = 0;
+       return;
+  else
+       isIn = 1;
+  end
+\end{lstlisting} 
+
+\subsubsection{Putting them all together}
+
+Now that we have functions to determine whether a point is in a given primitive, we are able to write the ``glue''
+code that allows us to take any set of primitives that make up a shape and determine if a point is within
+the shape. By finding the length of the cell array that stores the primitives we can iterate over each primitive
+checking the leading value of each primitive's vector and calling the appropriate function. 
+
+We now have all of the information we require to construct the potential energy matrix. For each point we have
+the correct index and we can determine whether that point is inside the QD. If a point is within the QD we 
+want to store the value of the electric field at that point, otherwise we want to store our maximum potential. 
+Using the sparse matrix representation, we create a vector of length $N^3$ where $N$ is the number of samples per
+dimension, and
+store the appropriate value for each sample point in its corresponding index. Once all of the values have been set
+for this vector, we use the \verb+spars(coordinate1, coordinate2, vector)+ function to create our $N^3 \times N^3$
+sparse matrix.
+
+The final product of these steps is the \verb+calcVPotential.m+ matlab function that can be found in the appendix. 
+
+\section{Kinetic Energy Matrix}
+As compared to the potential energy matrix, the construction of the kinetic energy matrix is quite simple. 
+If we remember from section \ref{sec:useWithSchro} our kinetic energy matrix must be of the form
+
+\begin{equation}
+\frac{1}{\Delta ^2}\begin{bmatrix}
+                -2     &   1    &     0    &     0   & \cdots & 0 \\
+                1      &  -2    &     1    &     0   & \cdots & 0 \\
+                0      &   1    &    -2    &     1   & \cdots & 0 \\
+                \vdots & \vdots &   \vdots & \vdots  & \ddots & \vdots \\
+                0      & \cdots &    \cdots     &     0   &    1   & -2
+              \end{bmatrix}
+\label{eq:kinetic2}
+\end{equation}
+
+As a tri-diagonal matrix where most of the indices will be zero, the kinetic energy matrix is also ripe for sparse
+matrix representation. 
+
+When we worked through creating the matrix in section \ref{sec:useWithSchro} we were only dealing with a one dimensional
+system. Because our implementation models a three dimensional system we must create an appropriate matrix that represents
+all three dimensions. 
+
+
+\subsection{Using the Tensor Product to Increase Dimensionality}
+One of the main points of the finite difference method is that the derivative at a point can be approximated
+using the function values at neighboring points.
+
+\begin{equation}
+f''(x) \approx \frac{f(x + h) - 2f(x) + f(x - h)}{h^2}
+\label{eq:2ndDegreeTaylor2}
+\end{equation}
+
+In one dimension this results in the matrix found in equation \ref{eq:kinetic2}. For any more dimensions however
+we must also take into account the neighboring points from additional dimensions. For two dimensions we can visualize
+this easily
+
+\begin{figure}
+\centering
+  \includegraphics[scale=1.2]{figures/finite2D.eps}
+  \caption{The neighboring points in two dimensions}
+\label{fig:finite2D}
+\end{figure}
+
+In figure \ref{fig:finite2D} we can see that the neighboring points are no longer on a single axis. The points in red
+are the points required for approximating the second derivative for point 17. Using equation \ref{eq:2ndDegreeTaylor2} as-is
+will utilize points 16 and 18 but not points 8 and 26. We can accomplish this expansion by performing a tensor product
+with the matrix in equation \ref{eq:kinetic2} and the identity matrix. 
+
+The tensor product, $\otimes$, of two matrices of equal dimensions is defined as
+
+\begin{equation}
+\begin{array}{r l}
+\setlength{\jot}{9pt}
+\begin{bmatrix}
+        A_{1,1} & A_{1,2} \\
+        A_{2,1} & A_{2,2} \\
+\end{bmatrix} \otimes
+\begin{bmatrix}
+        B_{1,1} & B_{1,2} \\
+        B_{2,1} & B_{2,2} \\
+\end{bmatrix} &= \begin{bmatrix}
+                    A_{1,1} \begin{bmatrix}
+                             B_{1,1} & B_{1,2} \\
+                             B_{2,1} & B_{2,2} \\
+                             \end{bmatrix} & A_{1,2} \begin{bmatrix}
+                                                      B_{1,1} & B_{1,2} \\
+                                                      B_{2,1} & B_{2,2} \\
+                                                     \end{bmatrix} \\
+ 
+                    A_{2,1} \begin{bmatrix}
+                             B_{1,1} & B_{1,2} \\
+                             B_{2,1} & B_{2,2} \\
+                             \end{bmatrix} & A_{2,2} \begin{bmatrix}
+                                                      B_{1,1} & B_{1,2} \\
+                                                      B_{2,1} & B_{2,2} \\
+                                                     \end{bmatrix} \\
+
+                \end{bmatrix} \\
+              & = \begin{bmatrix}
+                    A_{1,1}B_{1,1} & A_{1,1}B_{1,2} & A_{1,2}B_{1,1} & A_{1,2}B_{1,2} \\
+                    A_{1,1}B_{2,1} & A_{1,1}B_{2,2} & A_{1,2}B_{2,1} & A_{1,2}B_{2,2} \\
+                    A_{2,1}B_{1,1} & A_{2,1}B_{1,2} & A_{2,2}B_{1,1} & A_{2,2}B_{1,2} \\
+                    A_{2,1}B_{2,1} & A_{2,1}B_{2,2} & A_{2,2}B_{2,1} & A_{2,2}B_{2,2} \\
+                   \end{bmatrix}
+\end{array}
+\label{eq:tensorDef}
+\end{equation}
+
+The tensor product must be performed with an identity matrix to create the proper expansion. For two dimensions
+the form of the equation will be 
+
+\begin{equation}
+K = X \otimes I + I \otimes Y
+\label{eq:2DTensor}
+\end{equation}
+
+Where $X$ and $Y$ represent the kinetic energy matrices for their respective dimensions and $I$ represents the 
+identity matrix. Working through a small example will illustrate how this equation produces the desired results. 
+The example we will use will have $N = 3$ samples per dimension, giving us a $3 \times 3$ version of the kinetic
+energy matrix. This results in a two dimensional sample space of $9$ points. 
+
+We begin by performing $X \otimes I$
+
+\begin{equation}
+\begin{bmatrix}
+ -2 & 1 & 0 \\
+  1 & -2 & 1 \\
+  0 & 1 & -2 \\
+\end{bmatrix} \otimes \begin{bmatrix}
+                        1 & 0 & 0 \\
+                        0 & 1 & 0 \\
+                        0 & 0 & 1 \\
+                      \end{bmatrix} = \begin{bmatrix}
+                                        -2 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                        0 & -2 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\ 
+                                        0 & 0 & -2 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                        1 & 0 & 0 & -2 & 0 & 0 & 1 & 0 & 0 \\
+                                        0 & 1 & 0 & 0 & -2 & 0 & 0 & 1 & 0 \\
+                                        0 & 0 & 1 & 0 & 0 & -2 & 0 & 0 & 1 \\
+                                        0 & 0 & 0 & 1 & 0 & 0 & -2 & 0 & 0 \\
+                                        0 & 0 & 0 & 0 & 1 & 0 & 0 & -2 & 0 \\
+                                        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & -2 \\
+                                      \end{bmatrix}
+\label{eq:tensorExample}
+\end{equation}
+
+Then perform $I \otimes Y$
+
+\begin{equation}
+\begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix} \otimes \begin{bmatrix}
+                         -2 & 1 & 0 \\
+                          1 & -2 & 1 \\
+                          0 & 1 & -2 \\
+                      \end{bmatrix} = \begin{bmatrix}
+                                        -2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                        1 & -2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+                                        0 & 1 & -2 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                                        0 & 0 & 0 & -2 & 1 & 0 & 0 & 0 & 0 \\
+                                        0 & 0 & 0 & 1 & -2 & 1 & 0 & 0 & 0 \\
+                                        0 & 0 & 0 & 0 & 1 & -2 & 0 & 0 & 0 \\
+                                        0 & 0 & 0 & 0 & 0 & 0 & -2 & 1 & 0 \\
+                                        0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 & 1 \\
+                                        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 \\
+                                      \end{bmatrix}
+\label{eq:tensorExample2}
+\end{equation}
+By adding the two resulting matrices we get
+\begin{equation}
+                       \begin{bmatrix}
+                                        -4 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+                                        1 & -4 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\ 
+                                        0 & 1 & -4 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                                        1 & 0 & 0 & -4 & 1 & 0 & 1 & 0 & 0 \\
+                                        0 & 1 & 0 & 1 & -4 & 1 & 0 & 1 & 0 \\
+                                        0 & 0 & 1 & 0 & 1 & -4 & 0 & 0 & 1 \\
+                                        0 & 0 & 0 & 1 & 0 & 0 & -4 & 1 & 0 \\
+                                        0 & 0 & 0 & 0 & 1 & 0 & 1 & -4 & 1 \\
+                                        0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & -4 \\
+                                      \end{bmatrix}
+\label{eq:finalMat}
+\end{equation}
+
+The first observation is that the diagonal is no longer $-2$ but $-4$ instead. This has to do with the relative 
+amount each of the points is weighted when approximating the second derivative. In a single dimension up to two
+neighbors were taken into account, for two dimensions up to four neighbors. In order to conserve the center point's
+relative weight to its neighbors it is doubled here. In fact, when expanding yet again to three dimensions the 
+point is tripled to $-6$. 
+If we were to choose any point in our sample space we would see that the rows from the matrix result in equation 
+\ref{eq:finalMat} have the appropriate coefficients. For example, if chose sample point $4$ we would expect to 
+use the neighboring values, in this case points $1$, $5$ and $7$. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=2.0]{figures/9PointExample.eps}
+\caption{The example sample space with neighbors colored red}
+\label{9PointExample}
+\end{figure}
+
+In fact, the matrix from equation \ref{eq:finalMat} has a $1$ in columns $1$, $5$ and $7$. The process from equation 
+\ref{eq:2DTensor} has preserved the appropriate boundaries and expanded the system to two dimensions. Unfortunately,
+it is not possible to add the third dimension as we did with the second dimension. In order to expand to three dimensions
+properly the equation is
+
+\begin{equation}
+K = X \otimes I \otimes I + I \otimes Y \otimes I + I \otimes I \otimes Z
+\label{eq:3DTensor}
+\end{equation}
+
+As we can see, the pattern is the same idea but extended to include a third component. When performing this expansion 
+in two dimensions the two $3 \times 3$ matrices resulted in a $9 \times 9$ kinetic energy matrix. For three dimensions
+this expands even further to $27 \times 27$, or $N^3 \times N^3$. This illustrates how crucial it is to utilize sparse 
+matrix representations. Otherwise even relatively small sample rates will result in huge memory requirements when in fact
+most of the `data' are zeros.
+
+Creating the matrix requires two main steps. First we must set up the matrix from equation \ref{eq:kinetic2}. This is 
+done using the \verb+setCoefficient+ function. The function takes two parameters, \verb+corners+ and
+\verb+n+. We introduced \verb+corners+ to specify the values at the corners of the
+matrix in order to experiment with different boundary conditions. The parameter \verb+n+ defines the number of samples
+for each dimension. 
+
+The function itself consists of three parts. The first section allocates an empty matrix of size $n \times n$ and 
+set the diagonal and neighboring values to the appropriate coefficient. 
+
+\begin{lstlisting}[caption={Function to create matrix of coefficients}, label=lst:setCoefficient]
+    function K = setCoefficient(n, corners)
+	K = zeros(n); %initialize empty matrix of size n
+	
+	%use determined coefficients to fill diagonal
+	for i = 2:n-1
+		K(i,i-1) = 1;
+		K(i,i)   = -2;
+		K(i,i+1) = 1;
+	end
+\end{lstlisting}
+
+
+Note that
+at this point the matrix is not a sparse matrix, this is due to the fact that full\footnote{non-sparse} matrices are
+easier to manipulate in \verb+MATLAB+ than their sparse counterparts. Being $n \times n$ is still very manageable in terms
+of memory resources and will be converted to a sparse matrix once any manipulation of the corners and rows has been completed. 
+We perform this in the next section of the function
+
+\begin{lstlisting}[caption={Second two parts of setting the coefficients}, label=lst:cetCoeff2, firstnumber=11]	
+	%Ensure that the corners of the matrix are what we desire
+	%old version that worked:
+	K(1,1) = corners;
+	K(1,2) = -1;
+	K(n,n) = corners;
+	K(n,n-1) = -1;
+	
+	K = sparse(K);
+end	
+\end{lstlisting}
+
+Having converted the matrix to its sparse representation we now gain the memory saving benefits while having taken
+advantage of the ease of manipulation when constructing the matrix. 
+
+
+\section{Simulating a Quantum Dot}
+Now that we have both the kinetic and potential energy matrices we can simulate the system. 
 
 
 \chapter{Results and Discussion}

@@ -22,7 +22,7 @@ numbers=left
 \date{2011-September-14}
 \supervisor{Prof. Samuel L. Braunstein}
 \MNC
-\wordcount{1337}
+\wordcount{Not Done Yet}
 \abstract{ \LaTeXe\ is a document markup and processing system built
   upon Donald Knuth's type-setting system, \TeX.}
    
@@ -194,7 +194,7 @@ p_{x}^{2}\Psi (x,t) = (\hbar k_{x})^2\Psi (x,t) = -\hbar ^2\frac{\partial ^2}{\p
 \label{brogile2}
 \end{equation}
 
-This gives us the following substitution to use for our momentum,
+This gives us the following substitution to use for our momentum in $n$ spatial dimensions,
 
 \begin{equation}
 p \rightarrow -i\hbar \nabla,\ p^2 \rightarrow -\hbar\nabla ^2
@@ -210,7 +210,7 @@ i\hbar\frac{\partial}{\partial t}\Psi (x,t) = -\frac{\hbar ^2}{2m}\nabla ^2 + V(
 \label{eq:H}
 \end{equation}
 
-By assuming a trivial time dependence we can obtain the time-independent Schr\"{o}dinger equation. This replaces
+By assuming a static scenario we can obtain the time-independent Schr\"{o}dinger equation. This replaces
 the $i\hbar \frac{\partial}{\partial t}$ in \ref{eq:H} with $E$. With the wavefunction also having a trivial time
 dependence we arrive at
 
@@ -252,10 +252,14 @@ $\lambda$ with $v$ we arrive at the same result as multiplying $A$ with $v$ \cit
 because when a vector $v$ that when multiplied by $A$ only changes in scale can have interesting properties in relation
 to the system being analyzed. In our case, the Hamiltonian $\hat{H}$ is the differentiable operator associated with 
 the energy of a quantum system. When discretized $\hat{H}$ forms a square matrix which is acting on the vector $\psi$
-(which is the wavefunction). The time-independent Schr\"{o}dinger equation is therefore and eigenvalue equation where
-$E$ is an eigenvalue acting on the same wavefunction. 
+(which is the wavefunction). The time-independent Schr\"{o}dinger equation is therefore an eigenvalue equation where
+$E$ represents the eigenvalues of the Hamiltonian matrix.  
 The real eigenvalue solutions to this equation are the energy levels
-of the particle. These energy levels give us spectral information about the system being modeled. 
+of the particle. These energy levels give us spectral information about the system being modeled. When the quantum 
+dot is excited it will be at a higher energy level, when this energy is released (in the form of light) it will drop 
+down to a lower energy level. This is most likely to occur most often in the lowest two energy levels. More specifically,
+we will be looking at the two smallest real eigenvalues as the difference between these two
+eigenvalues gives us information about the spectrum emitted. 
 
 
 %\begin{equation}
@@ -266,10 +270,9 @@ of the particle. These energy levels give us spectral information about the syst
 
 
 \subsection{Properties of Quantum Dots}
-Quantum dots (QDs from this point on) are structures of semiconductors ranging between ??????
-RANGE HERE ??????. Their size and properties make them ideal in modeling atomic physics in a
-macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms 
-??CITE RELEVANT HERE??.
+Quantum dots (QDs from this point on) are structures of semiconductors ranging between 100 Angstroms and 
+a few nanometers \cite{dots}. Their size and properties make them ideal in modeling atomic physics in a
+macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms.
 
 \subsubsection{Potential Wells}
 
@@ -340,20 +343,17 @@ with the intensity of the electric field. This changes our equation \ref{vx} to
 
 \begin{equation}
 V(x) = \begin{cases}
-          mx & \text{if $x$ is in $A$}  \\
+          \varepsilon (x) & \text{if $x$ is in $A$}  \\
           \infty    & \text{if $x$ is not in $A$} 
          \end{cases}
 \label{vx2}
 \end{equation}
 
-Where $m$ is the slope of the line defining the electric field. We derived $m$ in our models by
-taking the maximum value of the electric field and dividing it by the length of the dimension 
-the electric field is acting on. By ensuring that the electric field was only acting on the $x$ dimension
-we get
-
-$$m = \frac{\text{Max(Electric Field)}}{L_x}$$
-
-Where $L_{x}$ is the length of the $x$ dimension.
+Where $\varepsilon$ is the electric field, and $\varepsilon (x)$ is the value of the electric field at position
+$x$. In one dimension, the electric field is represented by a gradient in the $x$ direction. For two or
+three dimensions, the electric field can be represented by a plane. By orienting the plane in a single 
+dimension (such as the $x$ dimension, $\varepsilon (x)$ can remain dependent on only one dimension, this simplifying
+the design. 
 
 \subsubsection{Confinement in 3 Dimensions = Quantum Dots}
 Now that we have an understanding of potential wells in one dimension we can easily expand this to higher
@@ -563,10 +563,10 @@ $\Delta = .1$. This will give us a vector of $11$ of $\psi$ wave function sample
 
 $$\begin{bmatrix} 
         \psi _0  \\
-        \psi _{.1}  \\
-        \psi _{.2} \\
+        \psi _{0.1}  \\
+        \psi _{0.2} \\
         \vdots    \\
-        \psi _{1} 
+        \psi _{1.0} 
    \end{bmatrix}
 $$
 
@@ -620,9 +620,8 @@ we have sufficient information to numerically solve for the eigenvalues of this 
 of the quantum dot.  
  
 
-Now that we have looked that the principles of the FDM, we can now look at how to apply it to the Schro\"{o}dinger equation.
 
-\subsection{Sources of Error}
+%\subsection{Sources of Error}
 
 \section{Representation of Shapes}
 In reaching our goal of modeling quantum dots of various shapes, we must look into how shapes can be defined and used in 
@@ -699,7 +698,11 @@ create a representation of a circle in a $10x10$ grid
 
 In \ref{rasterCircle} we have superimposed a red circle on the image to better illustrate the actual dimensions of the circle. 
 Without the mathematical representation of the circle (what is in red), we would not know how to scale this image if instead of
-$10x10$ we chose to use a $20x20$ grid. This is because the ``true'' shape of the circle is lost in the raster representation.  
+$10 \times 10$ we chose to use a $20 \times 20$ grid. This is because the ``true'' shape of the circle is 
+lost in the raster representation.  
+It is for this reason that raster images such as \verb+.bmp+ or \verb+.jpg+ can only be scaled up to certain levels before
+the resolution is lost and errors become apparent. 
+
 
 \subsection{Geometric Primitives (Vector Graphics)}
 
@@ -720,6 +723,50 @@ The list of primitives may seem short, but by combining these primitives in vari
 complex shapes. For example, two $90^{\circ}$ isosceles triangles can be placed together at their hypotenuse to form 
 a square. In fact, triangles can be used to form any polygon. 
 
+The key difference between vector graphics and raster graphics is in how they store the image information. While raster
+graphics (as discussed) store a `map' of the image in a set resolution, vector graphics store sets of mathematical properties
+that can then be rendered at an arbitrary resolution. For a two dimensional system there would be a pre-defined
+\emph{canvas} on which the primitives were defined. This canvas could be seen as a two dimensional grid of arbitrary accuracy. 
+For example, a line (which is a primitive) in a vector graphic may be defined by two points on a canvas and a color. 
+When rendered the program would then find the two points on the canvas (via coordinates on a grid) and connect the two 
+points with whatever color was defined. In the case of a circle, only the origin, radius, and color need to be stored. 
+Because the information about the circle is independent of the resolution, you are able to produce the circle at any resolution.
+When changing resolution from low to high no information is lost, and the circle can be correctly constructed at the 
+new resolution. Many font descriptions are based on vector representations of the characters. By defining the characters
+mathematically fonts can be scaled to huge sizes and still produce the desired form. \verb+METAFONT+, which is the font system 
+used by \LaTeXe has a set of primitives that allows for huge flexibility in the variety of fonts that can be created. As with
+any vector graphic system, the primitives in \verb+METAFONT+ can be arranged to create arbitrary shapes, not just characters,
+so shapes such as 
+
+\begin{equation}
+\sum \text{, } \int \text{, and \Bart} \nonumber
+\end{equation}
+
+
+are defined using the same primitives as ordinary alphabetic characters. 
+
+For our purposes, a rendered image is not important, only the information about the shape itself is needed. Therefore color 
+would not be necessary whether the techniques from raster or vector graphics were used. In a three dimensional sample cube, which
+is the domain we will be working in, the value of the points (is they are in the shape or not) is similar to a three dimensional
+raster graphic. This would be a tempting way to create the shapes as it would allow easy translation to the sample values. 
+However, because of the resolution-dependent nature of raster representations, it would not allow us to change the 
+number of samples we take in the sample cube (making it higher resolution) without losing information about the shape
+of the quantum dot. Therefore we have chosen to use geometric primitives to represent our shapes. This adds a layer of
+computation when converting from our shape representation to the final sample cube, but gives us the flexibility to
+change the resolution depending on our needs.
+
+The three primitives implemented are
+
+\begin{itemize}
+        \item sphere
+        \item rectangular prism
+        \item cylinder
+\end{itemize}
+
+If our end goal were more graphics oriented, we would have need to implement planes, lines, dots, and possibly others; but
+as our goal is to represent physical shapes these were not necessary. A plane-like shape can be defined using a very thin 
+rectangular prism, a thin fiber or wire can be described as a cylinder with a very small radius, etc. 
+
 \chapter{Design and Implementation}
 Now that we've looked at the necessary background information we can construct a program that will 
 compute our numerical approximations. First we will look at how to represent our geometric primitives 
@@ -728,6 +775,7 @@ the matrix for the kinetic energy. After we have looked at the basic constructio
 will look at using sparse matrix representations in order to keep the memory usage as small as possible.
 
 \section{Sparse Matrix Representations}
+\label{sec:sparse}
 The implementation that is described in this chapter uses \emph{sparse matrix} representations of the
 kinetic and potential energy matrices. In this section we will explain how sparse matrices work and the advantages
 they allow for certain problems such as our own. 
@@ -980,14 +1028,15 @@ end
 \end{lstlisting}
 
 Because only cylinders required the $t$ value to be translated into the actual point the function 
-\verb+parametricPoint(cyl, t)+ was written as a private function within the body of \ref{lst:isInCyl}.
+\verb+parametricPoint(cyl, t)+ was written as a private function within the body of the \verb+isInCylinder+
+function.
 
 \subsubsection{Points in a Rectangular Prism}
 We can apply many of the same principles we used in testing points in a cylinder to points in a rectangular prism.
 Having a corner point (defined as the origin) and the length of each dimension we have enough information to make a
 parametric equation for the three lines that intersect the origin. The main difference between using parametric 
 equations for the rectangular prism and the cylinder is that we only need to test that $t$ is within the constraints 
-in \ref{eq:tBoundary} for each dimension. We can illustrate this easily using a two-dimensional example
+in equation \ref{eq:tBoundary} for each dimension. We can illustrate this easily using a two-dimensional example
 
 \begin{figure}[h!]
   \centering
@@ -1231,7 +1280,7 @@ If we were to choose any point in our sample space we would see that the rows fr
 \ref{eq:finalMat} have the appropriate coefficients. For example, if chose sample point $4$ we would expect to 
 use the neighboring values, in this case points $1$, $5$ and $7$. 
 
-\begin{figure}
+\begin{figure}[!h]
 \centering
 \includegraphics[scale=2.0]{figures/9PointExample.eps}
 \caption{The example sample space with neighbors colored red}
@@ -1295,14 +1344,58 @@ end
 \end{lstlisting}
 
 Having converted the matrix to its sparse representation we now gain the memory saving benefits while having taken
-advantage of the ease of manipulation when constructing the matrix. 
+advantage of the ease of manipulation when constructing the matrix. The matrix is then expanded to account for the
+three dimensional system as described in section \ref{sec:sparse}. The \verb+MATLAB+ implementation of the tensor product works
+on sparse matrix representations so no work was necessary in implementing that process. Once the matrix has been
+expanded we are ready to add the kinetic and potential energy matrices together.  
 
 
-\section{Simulating a Quantum Dot}
-Now that we have both the kinetic and potential energy matrices we can simulate the system. 
+\section{Modeling the Quantum Dot}
+Now that we have both the kinetic and potential energy matrices we can simulate the system. Having implemented 
+all of the necessary functions we can run the model and attain the desired information. 
+Because or goal is to see the difference in the emitted spectrum from the changing electric field, we will be 
+creating one kinetic energy matrix for an entire experiment, but change the potential energy 
+to accommodate the varying electric fields. 
+
+The function will take in all of the necessary setup information. This includes the number of samples per dimension,
+\verb+n+, the maximum value for the potential of sample points outside of the quantum dot \verb+vMax+, the cell array of 
+primitives that defines the shape of the QD, \verb+shapes+, and lastly the three parameters that define the range and
+the step size for the electric field, \verb+elecFieldMin, elecFieldMac, + and \verb+ elecStepSize+ respectively. 
+
+\begin{lstlisting}[caption={Setup for running the model}, label=lst:QdSim1]
+function results = QDSim(n,vMax,shapes, elecFieldMin, elecFieldMax, elecStepSize)
+	%here we have defined L to be 1 in all three dimensions
+	delta = 1/(n-1);
+	K = (1/(delta^2))*setupK3(n);
+	
+	for i = elecFieldMin:elecStepSize:elecFieldMax
+		
+	    V = calcVPotential(shapes,i, n, vMax);
+	    H = K + V;
+	    eigsAns = eigs(H,2,'SM');
+	    temp = eigsAns(1) - eigsAns(2);
+	    fprintf(fileID,'%f,%f,%d,%f\n',eigsAns(1), eigsAns(2), i, temp);
+	    results(count,:) = [eigsAns(1),eigsAns(2), i,temp];
+		i
+		count = count + 1
+	end
+\end{lstlisting}
+
+The main part of the function\footnote{Note that the listing presented here does not include the code required to write the
+results to a file and other `housekeeping' code. We have presented here just the actual implementation details of the 
+simulation itself.}  is the \verb+for+ loop that iterates through the electric field values. 
+To find the eigenvalues we use the \verb+MATLAB+ function \verb+eigs+. This function takes the 
+Hamiltonian matrix, an integer specifying the number of eigenvalues to be calculated, and a switch
+to find the smallest eigenvalues (\verb+'SM'+). This implementation of the eigenvalue solver 
+is meant to be used with sparse matrix representations so as to conserve memory. However, as we will
+discuss in the next chapter, we found that when finding the two smallest eigenvalues the \verb+eigs+ function
+still required a non-trivial amount of memory. 
+
+\chapter{Testing and Results}
 
 
-\chapter{Results and Discussion}
+
+
 
 \chapter{Conclusion}
 

@@ -115,7 +115,7 @@ has lead to the modern understanding of quantum mechanics, and was the foundatio
 which is the equation we have used to model quantum dots. 
 
 \subsection{The Schr\"{o}dinger Equation}
-The Schr\"{o}dinger equation is of up most importance in physics since the beginning of the 20th Century. Solutions
+The Schr\"{o}dinger equation has been of the up most importance in physics since the beginning of the 20th Century. Solutions
 to this equation can be used to describe systems ranging from the subatomic to the molecular and macroscopic. In this
 section we will go over the foundation of the equation and produce the form to be used in our model. 
 
@@ -227,12 +227,6 @@ E\psi = \hat{H}\psi
 \label{eq:eigenSchrodinger}
 \end{equation}
 
-The time-independent Schr\"{o}dinger equation is therefore and eigenvalue equation. It is this form of the
-Schr\"{o}dinger equation that is being used to model quantum dots in this report. 
-The real eigenvalue solutions to this equation are the energy levels
-of the particle. These energy levels give us spectral information about the system being modeled. 
-
-
 It is important to note at this point that the Schr\"{o}dinger equation does not have a mathematically rigorous 
 derivation or proof. It is a heuristic derivation based on the hypotheses of Einstein and de Brogile and Schr\"{o}dinger's
 desire to construct a wave equation that addresses the wave-particle duality \cite{ricardo, qp}. %CITE MORE HERE OMG OMG OMG PLEASE
@@ -242,6 +236,27 @@ to find an analytical solution to the hydrogen atom that correctly predicted the
 \cite{qp}. This was done using Coulomb's law, which for the hydrogen atom states that the potential is symmetric in all dimensions
 and only the distance from the nucleus is needed. Sch\"{o}dinger's equation has been used to find solutions to other atoms and
 molecules, but usually analytical solutions are infeasible and the solutions are computed numerically. 
+
+
+\subsubsection{Eigenvalue Problems}
+The time-independent Schr\"{o}dinger equation can be treated as an eigenvalue problem for determining the energy levels
+of a particle, which in our case is a quantum dot. An eigenvalue is a matrix equation of the form
+
+\begin{equation}
+Av = \lambda v
+\label{eq:eigenDef}
+\end{equation}
+
+Here, $A$ is a square matrix and $v$ is a vector. The eigenvalue is the scalar $\lambda$ that by multiplying 
+$\lambda$ with $v$ we arrive at the same result as multiplying $A$ with $v$ \cite{Hamming}. This is of interest
+because when a vector $v$ that when multiplied by $A$ only changes in scale can have interesting properties in relation
+to the system being analyzed. In our case, the Hamiltonian $\hat{H}$ is the differentiable operator associated with 
+the energy of a quantum system. When discretized $\hat{H}$ forms a square matrix which is acting on the vector $\psi$
+(which is the wavefunction). The time-independent Schr\"{o}dinger equation is therefore and eigenvalue equation where
+$E$ is an eigenvalue acting on the same wavefunction. 
+The real eigenvalue solutions to this equation are the energy levels
+of the particle. These energy levels give us spectral information about the system being modeled. 
+
 
 %\begin{equation}
 %\nabla ^2 = \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) 
@@ -267,9 +282,9 @@ macroscopic system \cite{Li}. For this reason, they are sometimes referred to as
     \label{potWells}
 \end{figure}
 
-Quantum dots confine free carriers in all three dimension. In order to understand the implications
+Quantum dots confine free carriers in all three dimensions. In order to understand the implications
 of this we will look at how confinement is described by using \emph{potential wells}. A potential
-well is an area of low potential (a) surrounded by areas of much higher potentials (b). The difference 
+well is an area of low potential energy, $A$, surrounded by areas of much higher potential, $B$. The difference 
 in potentials is great enough that the wavefunction of a particle in $A$ would be zero anywhere in $B$\footnote{
 remember that the wavefunction is a separate concept from the potential energy}, i.e.
 the particle is \emph{confined} to area $A$. Figure \ref{potWells} illustrates an approximate ``shape'' of
@@ -287,7 +302,7 @@ V(x) = \begin{cases}
 
 
 Using the model in part (b) of figure \ref{potWells} allows us to have a trivially identifiable well where confinement
-takes place. This the method with which physicists tackle analytical solutions to the Schr\"{o}dinger equation 
+takes place. This is the method with which physicists tackle analytical solutions to the Schr\"{o}dinger equation 
 such as the ``particle in a box'' condition that we will investigate in a later section \cite{datta, qp, dots}.  
 As mentioned earlier, when in a potential well the wavefunction of a particle cannot have enough energy to be present
 outside of the well. This means that all possible wavefunctions are \emph{standing waves}\footnote{Standing
@@ -318,8 +333,8 @@ the model potential well.
   \label{fieldWell}
 \end{figure}
 
-This means that when the potential well is in an electric field we must also take into account the 
-slope of the electric field when determining the potential energy for a point within $A$. In the one 
+This means that when determining the potential energy for a point within $A$ we must also take into account the 
+slope of the well created by the electric field. In the one 
 dimensional case the potential energy is defined as a line with a slope that grows proportionally 
 with the intensity of the electric field. This changes our equation \ref{vx} to
 
@@ -338,9 +353,13 @@ we get
 
 $$m = \frac{\text{Max(Electric Field)}}{L_x}$$
 
-\subsection{Confinement in 3D = Quantum Dots}
+Where $L_{x}$ is the length of the $x$ dimension.
+
+\subsubsection{Confinement in 3 Dimensions = Quantum Dots}
 Now that we have an understanding of potential wells in one dimension we can easily expand this to higher
-dimensionality. 
+dimensionality. When a particle is confined in two dimensions, the system is known as a quantum wire. In three 
+dimensions, we have a quantum dot. Whereas quantum wells and wires allowed a free carrier to potentially move in 
+certain dimensions, a quantum dot restricts the free carrier to a finite three dimensional area \cite{dots}. 
 
 
 \section{Finite Difference Method}
@@ -412,7 +431,7 @@ With the forward difference operator this is done as follows
 
 As we can see in equation \ref{eq:deltaSquared} the result for $\Delta ^2$ using the forward difference operator is based 
 on the function's value at point $x$ and the succeeding two points $x+h$ and $x+2h$ respectively. Performing the same 
-process using the central difference operator produces a slightly difference approximation
+process using the central difference operator produces a slightly different approximation
 
 \begin{align}
  \delta ^2 f(x)&= \delta [\delta f(x)]  \nonumber\\
@@ -427,7 +446,9 @@ process using the central difference operator produces a slightly difference app
 
 Interestingly, we can see that equations \ref{eq:deltaSquared} and \ref{eq:delta2Squared} have similar coefficients,
 with each point being shifted by $-h$. Following the same steps for the backward difference would result in each point
-in equation \ref{eq:deltaSquared} being shifted by $-2h$. Now that we have defined the various difference operators 
+in equation \ref{eq:deltaSquared} being shifted by $-2h$. 
+
+Now that we have defined the various difference operators 
 we can now apply them to approximating the derivatives of a function. 
 
 \subsubsection{Approximating Derivatives} 
@@ -467,7 +488,8 @@ we wish to compute the spatial derivative'' \cite{weatherley4}. Additionally, so
 either the forward or backward difference schemes. However, in cases where a point is equally influenced
 from all directions, the central difference provides more accurate solutions \cite{Hamming, weatherley, weatherley4, analysis}.
 In general cases such as these, the error for the forward and backward difference schemes is $O(h)$ whereas the error 
-for the central difference is $O(h^2)$ \cite{analysis, weatherley}. 
+for the central difference is $O(h^2)$\footnote{Here, $h$ is very small, so $h^2$ is actually a smaller
+error than $h$.} \cite{analysis, weatherley}. 
 %The proofs for the error as found in \cite{weatherley} has been provided in the appendix. 
 
 \subsection{Alternate Derivation using the Taylor Series}
@@ -516,7 +538,7 @@ f''(x) \approx \frac{f(x + h) - 2f(x) + f(x - h)}{h^2}
 
 As we can see the result is identical to the result in \ref{eq:2ndDegreeDiffOp}. Deriving the approximations through
 the Taylor series allows a greater flexibility for customizing solutions to different problems as the approximation
-can be derived from the specified points ($f(x+h)$ and $f(x-h)$ in our case). It allows extends to greater accuracy when
+can be derived from the specified points ($f(x+h)$ and $f(x-h)$ in our case). It allows extensions to greater accuracy when
 more points are included in the derivation \cite{cambridge}.  
 
 \subsection{Use with Schr\"{o}dinger Equation}
@@ -526,7 +548,10 @@ Remembering the time-independent Schr\"{o}dinger equation
 E\psi = \hat{H}\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi \nonumber
 \end{equation}
 
-For this example we will work in only one dimension and then show how we can extend it to three dimensions. 
+As an eigenvalue problem our goal is to find the real eigenvalues in order to gain insight into the spectral information
+of a quantum dot. 
+For this example we will work in only one dimension and then in section \ref{sec:tensor} show how we can extend
+it to three dimensions. 
 In one dimension this requires finding approximations to $\frac{\partial ^2 \psi}{\partial x}$. We can set our
 sample space on the $x$ axis to have a length of $1$ starting from the origin. The space between samples of the 
 wave function is given by
@@ -576,7 +601,8 @@ $N \times N$ in size. This matrix represents the kinetic energy portion of the S
 any potential the kinetic energy matrix is equivalent to the Hamiltonian operator and we now have enough information
 to solve the eigenvalue problem $E\psi = \hat{H}\psi$. In order to calculate the energy of the system taking into 
 account the potential $V$ we construct a diagonal $N \times N$ matrix where the values are the potential energy at each sample
-point. Therefore, $V_{nn}$ will equal the potential at point $x_{n}$. This will take the following form
+point. Therefore, $V_{nn}$ will equal the potential at point $x_{n}$\footnote{More information on the construction of
+the potential energy matrix is discussed in section \ref{sec:potential}}. This will take the following form
 
 \begin{equation}
 \begin{bmatrix}
@@ -589,27 +615,10 @@ point. Therefore, $V_{nn}$ will equal the potential at point $x_{n}$. This will 
 \label{eq:potential}
 \end{equation}
 
-This matrix is added to the kinetic energy matrix and then the eigenvalues are calculated. 
-
-
+This matrix is added to the kinetic energy matrix with gives us our new Hamiltonian operator. At his point
+we have sufficient information to numerically solve for the eigenvalues of this system, giving us the spectral information
+of the quantum dot.  
  
-However, what happens at the edges of our specified range ($x = 0$ and $x = 1$)? Are $x = -.1$
-and $x = 1.1$ required? This is where the boundary conditions come into play. Boundary conditions define the behavior
-of the function at the edges of our sample space. 
-In our example we will set the boundaries to $f(0) = 0$ and $f(1) = 2$. So this gives us the following system of equations
-
-\begin{align}
-\frac{-2(0)}{.1^2} + \frac{f(.1)}{.1^2} &= 0  \nonumber \\
-\frac{f(0)}{.1^2} - \frac{2f(.1)}{.1^2} + \frac{f(.2)}{.1^2} &= 0 \nonumber \\
-\frac{f(.1)}{.1^2} - \frac{2f(.2)}{.1^2} + \frac{f(.3)}{.1^2} &= 0\nonumber \\
-\vdots \hspace{.8in} &= \, \vdots \nonumber \\
-\frac{f(.8)}{.1^2} - \frac{2f(.9)}{.1^2} + \frac{f(1)}{.1^2} &= 0 \nonumber \\
-\frac{f(.9)}{.1^2} - \frac{2(2)}{.1^2} &= 0 \nonumber
-\end{align}
-
-This system is equivalent to the following matrix equation
-
-
 
 Now that we have looked that the principles of the FDM, we can now look at how to apply it to the Schro\"{o}dinger equation.
 
@@ -796,6 +805,7 @@ $n^3 \times n^3$, so even smaller sample rates such as $n = 50$ produces matrice
 
 
 \section{Potential Energy Matrix}
+\label{sec:potential}
 In this section we will focusing on the implementation of the setup of the potential energy matrix
 from the Sch\"{o}dinger equation, or $V$ from $E\psi = -\frac{\hbar ^2}{2m}\nabla ^2\psi + V\psi $.
 
@@ -1069,6 +1079,7 @@ all three dimensions.
 
 
 \subsection{Using the Tensor Product to Increase Dimensionality}
+\label{sec:tensor}
 One of the main points of the finite difference method is that the derivative at a point can be approximated
 using the function values at neighboring points.
 

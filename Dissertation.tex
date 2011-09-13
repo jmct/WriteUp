@@ -262,11 +262,6 @@ we will be looking at the two smallest real eigenvalues as the difference betwee
 eigenvalues gives us information about the spectrum emitted. 
 
 
-%\begin{equation}
-%\nabla ^2 = \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) 
-%\label{eq:laplace}
-%\end{equation}
-
 
 
 \subsection{Properties of Quantum Dots}
@@ -275,6 +270,7 @@ a few nanometers \cite{dots}. Their size and properties make them ideal in model
 macroscopic system \cite{Li}. For this reason, they are sometimes referred to as artificial atoms.
 
 \subsubsection{Potential Wells}
+\label{potentialWells}
 
 \begin{figure}[h]
   \centering
@@ -1391,11 +1387,183 @@ is meant to be used with sparse matrix representations so as to conserve memory.
 discuss in the next chapter, we found that when finding the two smallest eigenvalues the \verb+eigs+ function
 still required a non-trivial amount of memory. 
 
-\chapter{Testing and Results}
+\chapter{Results and Evaluation}
 
 
+\section{Comparison to Analytical Solution}
+Having designed and implemented the necessary components we can now begin to collect results. It would be 
+useful however to have some certainty that the results obtained with the implementation are sufficiently
+representative of the system we are modeling. As solutions to the Schr\"{o}dinger equation
+are usually too complex to be performed analytically in all but the simplest of conditions, 
+the approach we have taken is to find an analytical solution to a simple case and then replicate that
+simple case using our implementation. Using the results from this comparison we are able to gain some
+insight into the accuracy of the implementation. 
 
+\subsection{The Analytical Solution}
+In order to tackle an analytical solution, it is important for us to define the situation we are 
+calculating the solutions for. In our case we have a three dimensional cube space where each dimension
+is of length $L$. The shape of the quantum dot we will model is a cube where the length of each side
+is $.8L$. We will assume that the QD is not in an electric field. Lastly, we will assume an ideal\footnote{An infinite well
+as described in section \ref{potentialWells}} 
+potential well, where the wavefunction of the particle
+\emph{must} be zero at the boundaries of the quantum dot. 
 
+For the analytical solution we begin, of course, with the time-independent Schr\"{o}dinger equation. 
+In order to ease the reading
+of the equation as we progress, we will replace $\frac{\hbar ^2}{2m}$ with $\alpha$.
+
+\begin{equation}
+E\psi = -\alpha\nabla ^2 \psi + V\psi 
+\label{eq:timeIndependent2}
+\end{equation}
+
+Where
+
+\begin{equation}
+\nabla ^2 =  \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right)
+\label{eq:laplace}
+\end{equation}
+
+As the potential well is infinite, the wavefunction cannot exist outside of the potential, and there is no
+electric field the total energy of the system $E$ is equal to the kinetic energy. This allows us to 
+remove $V$ from the equation. For the wavefunction to be valid, the derivative of the wavefunction must 
+be proportional to the wavefunction itself \cite{PIAB}. Both $\sin$ and $\cos$ have this proerty, making them
+potential candidates. We can however eliminate $\cos$ as a possibility 
+because of the boundary condition stating that the wavefunction must be zero at the boundaries ($\sin (0)$ and $\sin (L)$). 
+This leaves us with the wavefunction
+
+\begin{equation}
+\psi = N  \sin (\frac{n_x\pi x}{L}) \sin (\frac{n_y\pi y}{L}) \sin (\frac{n_z\pi z}{L})
+\label{wavefunction1}
+\end{equation} 
+
+Here $N$ is represents the normalization that ensures that the probability of finding the particle somewhere within the
+cube is $1$. For each dimension $n$ must be an integer value in order for the wavefunction to conform to our boundary conditions. 
+The wavefunction in \ref{wavefunction1} emphasizes that in this case, the three dimensional wavefunction is the product of 
+three separate wavefunctions. This is part of the reason that an analytical solution is possible for this example (through
+separation of variables). Using this wavefunction with
+
+\begin{equation}
+E\psi =-\alpha \left(\frac{\partial ^2}{\partial x} + \frac{\partial ^2}{\partial y} + \frac{\partial ^2}{\partial z}\right) \psi 
+\label{eq:timeIndependent3}
+\end{equation}
+
+Performing the necessary derivatives gives us
+
+\begin{equation}
+E\psi =\alpha \bigg(\Big(\frac{n_x \pi}{L}\Big)^2 + \Big(\frac{n_y \pi}{L}\Big)^2 + \Big(\frac{n_z \pi}{L}\Big)^2\bigg) \psi 
+\label{eq:timeIndependent4}
+\end{equation}
+
+This allows us to take out the common factor of $\frac{\pi}{L}^2$ leaving us with
+
+\begin{equation}
+E = \alpha \Big(\frac{\pi}{L}\Big)^2 \cdot \Big(n_{x}^2 + n_{y}^2 + n_{z}^2\Big)
+\label{SchrodingerLast}
+\end{equation}
+
+Now we are able to look at the energy in terms of $n_x$, $n_y$ and $n_z$ in a simple manner. Because the $n$ values
+must be whole integers, we can iterate through their possible combinations and see the energy levels of the particle. 
+We start with $n_x = n_y = n_z = 1$
+
+\begin{equation}
+\begin{array}{r l}
+E_{n_{x},n_{y},n{z}} = E_{1,1,1} &= \alpha\Big(\frac{\pi}{L}\Big)^2 \cdot \Big(1^2 + 1^2 + 1^2\Big) \nonumber \\
+                                 &= 3\alpha\Big(\frac{\pi}{L}\Big)^2  
+\label{Esubn}
+\end{array}
+\end{equation}
+
+What this means is that the first energy level (the lowest eigenvalue) is three times $\alpha$. If we continue this process,
+incrementing one of the $n$ values to $2$ we get
+
+%\begin{equation}
+\begin{align}
+E_{1,1,2} &= \alpha\Big(\frac{\pi}{L}\Big)^2 \cdot \Big(1^2 + 1^2 + 2^2\Big) \nonumber \\
+                                 &= 6\alpha\Big(\frac{\pi}{L}\Big)^2  
+\label{Esubn2}
+\end{align}
+%\end{equation}
+
+This makes sense of course, the main point here is to take into account that the $n$ values of $1,1,2$, $1,2,1$, and
+$2,1,1$ will produce identical results. What this means is that there will be three eigenvalues for the second energy level, as
+there are three arrangements that produce the same energy level. This phenomenon
+occurs whenever the set of three $n$ value results in $(n_x, n_y, n_z)$ being equal to another set. 
+Additionally, iterating through the possible combinations it what may appear to be a `logical' manner does not necessarily result
+in the sequential energy levels. This is apparent in the example of $2,2,2$  which results in a
+higher energy level ($12\alpha$) than $1,1,3$ (or any permutation of that) which results in $11\alpha$.
+
+With this in mind, the first $10$ energy levels (factoring out $\alpha$) are
+
+\begin{equation}
+3, 6, 6, 6, 9, 9, 9, 11, 11, 11
+\label{first10}
+\end{equation}
+
+Lastly, when describing our conditions and assumptions, we defined the length of our cube within the sample
+space as being $.8L$. Plugging this into equation \ref{Esubn} and factoring out $\alpha$ gives us $46.2638$. 
+Therefore if we run the model with a cube that has a length of eight tenths the length of our sample cube, 
+the first eigenvalue should be 
+
+\begin{equation}
+E_{1,1,1} = 46.2638 
+\label{lowestVal}
+\end{equation}
+
+Now that we have a set of energy levels that we know should correspond to the eigenvalues produced by our implementation
+we can find the accuracy of our model. 
+
+\subsection{Accuracy of the Model}
+Using the energy levels obtained in equation \ref{first10} we can gage how whether we are on the right track with our model.
+Knowing that the number of samples per dimension $N$ will affect the accuracy, we implemented a test that would produce
+the lowest ten eigenvalues for an increasing $N$. This produces a set of ten eigenvalues for each value of $N$ tested. 
+We then normalize each set of eigenvalues so that the lowest energy level will
+conform to what we know in equation \ref{Esubn}. Lastly, for each set of eigenvalues we calculate the mean percent error
+from the target (which is the set of values in equation \ref{first10}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{figures/meanPercentError.eps}
+\caption{The changing error as the number of samples increases}
+\label{errorPlot}
+\end{figure}
+
+As we can see, the error drops off rather quickly as $N$ increases. 
+
+Now we can look at the expected first eigenvalue
+for our $.8L$ cube and see how that compares to our model's results. 
+Because there is no set of results for each value of $N$ we are able
+to plot the computed value and see how it compares with what we have in equation \ref{lowestVal}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{figures/Mconverge.eps}
+\caption{The lowest eigenvalues for a $.8L$ cube} 
+\label{MconvergePlot}
+\end{figure}
+
+The results in figure \ref{MconvergePlot} do not show the type of convergence that we would expect from 
+our model. This led to investigation of what the root cause of this slow convergence could be. At first
+we toyed with the boundary conditions (especially the corners of the kinetic energy matrix) in the hopes
+that a better boundary condition in our model would lead to a faster convergence. These experiments often lead to
+unreasonable results that were further from our analytical solution than the results shown in figure \ref{MconvergePlot}.
+We did however stumble upon a paper that suggested eliminating the boundary points from the matrix (making the kinetic
+energy matrix have the dimensions $(N-1)^3 \times (N-1)^3$) \cite{datta}. While initially finding this to be a peculiar 
+suggestion we heeded the advice.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{figures/Mconverge.eps}
+\caption{The lowest eigenvalues for a $.8L$ cube} 
+\label{MconvergePlot}
+\end{figure}
+
+%\begin{align}
+%\frac{d^2}{dx^2}\sin (\frac{n_r\pi r}{L}) &=\nonumber \\
+%&=\frac{n_r\pi}{L}\frac{d}{dx}\cos(\frac{n_r\pi r}{L}) \nonumber \\
+%&=-(\frac{n_r\pi}{L})^2\sin(\frac{n_r\pi r}{L}) \nonumber \\ 
+%&=-(\frac{n_r\pi}{L})^2 \psi _{r} \text{ at } r
+%\end{align}
 
 \chapter{Conclusion}
 

@@ -239,6 +239,7 @@ molecules, but usually analytical solutions are infeasible and the solutions are
 
 
 \subsubsection{Eigenvalue Problems}
+\label{eigenvalueproblems}
 The time-independent Schr\"{o}dinger equation can be treated as an eigenvalue problem for determining the energy levels
 of a particle, which in our case is a quantum dot. An eigenvalue is a matrix equation of the form
 
@@ -1523,7 +1524,7 @@ from the target (which is the set of values in equation \ref{first10}.
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{figures/meanPercentError.eps}
+\includegraphics[scale=0.4]{figures/meanPercentError.eps}
 \caption{The changing error as the number of samples increases}
 \label{errorPlot}
 \end{figure}
@@ -1535,9 +1536,9 @@ for our $.8L$ cube and see how that compares to our model's results.
 Because there is no set of results for each value of $N$ we are able
 to plot the computed value and see how it compares with what we have in equation \ref{lowestVal}.
 
-\begin{figure}
+\begin{figure}[!h]
 \centering
-\includegraphics[scale=0.5]{figures/Mconverge.eps}
+\includegraphics[scale=0.4]{figures/Mconverge.eps}
 \caption{The lowest eigenvalues for a $.8L$ cube} 
 \label{MconvergePlot}
 \end{figure}
@@ -1551,12 +1552,57 @@ We did however stumble upon a paper that suggested eliminating the boundary poin
 energy matrix have the dimensions $(N-1)^3 \times (N-1)^3$) \cite{datta}. While initially finding this to be a peculiar 
 suggestion we heeded the advice.
 
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{figures/M2converge.eps}
+\caption{The lowest eigenvalues for a $.8L$ cube excluding boundary points} 
+\label{M2convergePlot}
+\end{figure}
+
+The convergence with this method is much faster and closer to what would be expected. While not initially intuitive, the reason
+that ignoring the boundary points is acceptable is due to the fact that the boundary condition states that the wavefunction
+must be zero \emph{at} the boundary. With hindsight it is clear that this means these points should not be included in the 
+calculation. This revelation also prompted us to go back into our implementation and change the \verb+isInShape+ functions to 
+accommodate the fact that any point \emph{on} the boundary should be considered outside the QD, forcing the wavefunction to be
+zero.  
+
+
+\section{The Properties of our Primitives}
+In this section we will look at how an increasing electric field affects the difference between the first two energy levels of
+the quantum dot. 
+
+\subsection{What are we looking for?}
+As mentioned in section \ref{eigenvalueproblems} the real eigenvalues of the Hamiltonian matrix represent the discrete 
+energy levels of the quantum dot. When the electric field increases and changes the properties of the potential well
+the relative difference between these energy levels changes. Therefore, when the particle drops from one energy level
+to another, releasing the energy as light, the energy released is dependent on the difference between the two energy levels.
+Because of what is observed in equation \ref{einsteinHyp}, which relates the wavelength of light to its energy, the changing
+difference between energy levels will result in changing the frequency of the light emitted. Certain geometries may have an 
+affect on the rate at which the differences in energy change. If the differences changed `faster' for shape $A$ than shape $B$
+an equal change in the electric field would cause a greater change in the frequency emitted by $A$. This is illustrated in 
+figure \ref{deltaE}
+
 \begin{figure}
 \centering
-\includegraphics[scale=0.5]{figures/Mconverge.eps}
-\caption{The lowest eigenvalues for a $.8L$ cube} 
-\label{MconvergePlot}
+\subfloat[Shape $A$]{\includegraphics[scale=0.40]{figures/deltaE2.eps}}
+\subfloat[Shape $B$]{\includegraphics[scale=0.40]{figures/deltaE1.eps}}
+\caption{While the $\Delta E$ is the same for both shapes, shape $A$ has a greater change in frequency}
+\label{deltaE}
 \end{figure}
+
+
+Now that we have taken a look at the accuracy of our model, we can look at some of the properties of our primitives. 
+This first primitive we will look at is the rectangular prism. In this case we have a defined a cube in the center of the
+sample space with the length of the sides being $.8$ times the length of the sample space
+
+\begin{figure}
+\centering
+\includegraphics[scale=.7]{figures/cubeV.eps}
+\caption{The drop in energy as the electric field increases}
+\label{cubeV}
+\end{figure}
+
+
 
 %\begin{align}
 %\frac{d^2}{dx^2}\sin (\frac{n_r\pi r}{L}) &=\nonumber \\

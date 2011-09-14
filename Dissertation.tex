@@ -1582,25 +1582,68 @@ affect on the rate at which the differences in energy change. If the differences
 an equal change in the electric field would cause a greater change in the frequency emitted by $A$. This is illustrated in 
 figure \ref{deltaE}
 
-\begin{figure}
+\begin{figure}[!h]
 \centering
-\subfloat[Shape $A$]{\includegraphics[scale=0.40]{figures/deltaE2.eps}}
-\subfloat[Shape $B$]{\includegraphics[scale=0.40]{figures/deltaE1.eps}}
+\subfloat[Shape $A$]{\includegraphics[scale=0.60]{figures/deltaE2.eps}}
+\subfloat[Shape $B$]{\includegraphics[scale=0.60]{figures/deltaE1.eps}}
 \caption{While the $\Delta E$ is the same for both shapes, shape $A$ has a greater change in frequency}
 \label{deltaE}
 \end{figure}
 
 
-Now that we have taken a look at the accuracy of our model, we can look at some of the properties of our primitives. 
-This first primitive we will look at is the rectangular prism. In this case we have a defined a cube in the center of the
-sample space with the length of the sides being $.8$ times the length of the sample space
+\subsection{The Primitives}
+We begin by looking at the rectangular prism. Here we modeled a QD that fit the description we used in our analytical solution,
+forming a cube with each side being $.8$ times the length of the sample cube. 
 
-\begin{figure}
+\begin{figure}[!h]
 \centering
-\includegraphics[scale=.7]{figures/cubeV.eps}
-\caption{The drop in energy as the electric field increases}
+\subfloat[Lowest energy level]{\includegraphics[scale=0.35]{figures/cubeV1.eps}}
+\subfloat[Difference in lowest two]{\includegraphics[scale=0.35]{figures/cubeV2.eps}}
+\caption{A QD the shape of a cube and the effects of an increasing electric field}
 \label{cubeV}
 \end{figure}
+
+Here we can see that while the energy levels themselves rise almost linearly with the increasing electric field, the difference
+between the lowest two energy levels decreases linearly. Of the three primitives this is the least surprising result. 
+The cylinder has a similar increase in the lowest eigenvalue, but a significantly different change in the difference between
+the lowest two energy levels. Most of the plot shows a linear decline, as with the cube, however there is a significant 
+spike at the lower values for the electric field. 
+
+\begin{figure}[!h]
+\centering
+\subfloat[Lowest energy level]{\includegraphics[scale=0.35]{figures/cylV1.eps}}
+\subfloat[Difference in lowest two]{\includegraphics[scale=0.35]{figures/cylV2.eps}}
+\caption{A QD the shape of a cylinder and the effects of an increasing electric field}
+\label{sphereV}
+\end{figure}
+
+The cylinder was defined as having its end points at $(.1, .5, .5)$ and $(.9, .5, .5)$, its radius was defined as $.45$. 
+Because the length of the cylinder is defined along the x-axis it makes sense that an electric field in the x direction
+would have such a great effect on the properties of the cylinder QD. 
+
+Lastly we have the sphere, the simplest to define. This sphere was defined at the center of the sample cube with a radius of
+$.45$.  
+
+\begin{figure}[!h]
+\centering
+\subfloat[Lowest energy level]{\includegraphics[scale=0.35]{figures/sphere1.eps}}
+\subfloat[Difference in lowest two]{\includegraphics[scale=0.35]{figures/sphere2.eps}}
+\caption{A QD the shape of a sphere and the effects of an increasing electric field}
+\label{sphereV}
+\end{figure}
+
+Once again, the value of the lowest eigenvalue is very similar to that of the cube and the cylinder. 
+Unlike the cube and the cylinder however, the sphere appears to have an increase in the difference between
+the lowest two energy levels. Additionally it produces what appears to be an almost quadratic response 
+with the lower levels of the electric field and then `straightens out' to an apparently linear response. 
+
+
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.7]{figures/cubeV.eps}
+%\caption{The drop in energy as the electric field increases}
+%\label{cubeV}
+%\end{figure}
 
 
 
@@ -1612,8 +1655,32 @@ sample space with the length of the sides being $.8$ times the length of the sam
 %\end{align}
 
 \chapter{Conclusion}
+In completing this project there were two main obstacles: producing a working implementation, and having the computational
+resources needed to obtain results. In working on the implementation there were several setbacks that came in the form of 
+small misunderstandings of the underlying process and therefore incorrectly implementing certain aspects of the implementation.
+While these setbacks were eventually overcome, precious time was used and wasted in obtaining results that 
+ultimately had no meaning. 
 
+As far as the computational resources were concerned, there was not much to be done other than attempt to make due with 
+the facilities at hand. Even with the use of sparse matrix representations the memory usage was incredibly high. A single run
+with an $N$ value of $50$ would often use over 15GB of RAM. While there is a general purpose server open to taught MSc 
+students\footnote{milan.cs.york.ac.uk} it is designated for 'light use' by the departmental support team \cite{support}. 
+Nevertheless, we would use the server when usage was low and would be less likely to interfere with other students' access.
 
+\begin{verbatim}
+ PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                 
+11463 jmc512    20   0 17.8g  16g  48m S  100 51.4 111:39.82 MATLAB 
+ 2974 root      20   0 42304  344  272 S    0  0.0  85:06.67 udisks-daemon 
+11806 jmc512    20   0 11304 1288  804 R    0  0.0   0:03.48 top 
+\end{verbatim}
+
+The above is a capture from the Linux \verb+top+ command that illustrates both the resources needed and the ability of
+the implementation to ensure that one never had to look far down the list to find the \verb+MATLAB+ process. The experiments
+illustrated by figures \ref{} and \ref{} were not possible on the student server and were only able to be completed due to
+the kindness of Jan Staunton who has access to a computing grid. 
+
+These obstacles aside, we feel that the project lays a good foundation for further work to be done in exploring the 
+possible benefits of different QD geometries. 
 
 \section{Further Work}
 

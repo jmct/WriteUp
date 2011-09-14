@@ -25,10 +25,17 @@ numbers=left
 \wordcount{Not Done Yet}
 \abstract{ \LaTeXe\ is a document markup and processing system built
   upon Donald Knuth's type-setting system, \TeX.}
-   
+  
+
+\acknowledgements{I would like to acknowledge and Professor Samuel Braunstein, who so graciously dealt with 
+ having to explain relatively rudimentary physics to a computer science student. When an experiment of mine
+was too resource intensive for the taught student facilities Jan Staunton was kind enough
+to run the experiment on the computing grid he has access to, for that I give many thanks. 
+Lastly, studying at York is made all the more pleasant by the incredibly kind and helpful administrative 
+and support staff, it does not go unappreciated.} 
 
 
-\begin{document} 
+\begin{document}
 \maketitle
 \chapter{Introduction}
 
@@ -1393,7 +1400,7 @@ still required a non-trivial amount of memory.
 
 \section{Comparison to Analytical Solution}
 Having designed and implemented the necessary components we can now begin to collect results. It would be 
-useful however to have some certainty that the results obtained with the implementation are sufficiently
+useful, however, to have some certainty that the results obtained with the implementation are sufficiently
 representative of the system we are modeling. As solutions to the Schr\"{o}dinger equation
 are usually too complex to be performed analytically in all but the simplest of conditions, 
 the approach we have taken is to find an analytical solution to a simple case and then replicate that
@@ -1426,10 +1433,10 @@ Where
 \end{equation}
 
 As the potential well is infinite, the wavefunction cannot exist outside of the potential, and there is no
-electric field the total energy of the system $E$ is equal to the kinetic energy. This allows us to 
+electric field, the total energy of the system $E$ is equal to the kinetic energy. This allows us to 
 remove $V$ from the equation. For the wavefunction to be valid, the derivative of the wavefunction must 
-be proportional to the wavefunction itself \cite{PIAB}. Both $\sin$ and $\cos$ have this proerty, making them
-potential candidates. We can however eliminate $\cos$ as a possibility 
+be proportional to the wavefunction itself \cite{PIAB}. Both $\sin$ and $\cos$ have this property, making them
+potential candidates. We can eliminate $\cos$ as a possibility 
 because of the boundary condition stating that the wavefunction must be zero at the boundaries ($\sin (0)$ and $\sin (L)$). 
 This leaves us with the wavefunction
 
@@ -1486,11 +1493,11 @@ E_{1,1,2} &= \alpha\Big(\frac{\pi}{L}\Big)^2 \cdot \Big(1^2 + 1^2 + 2^2\Big) \no
 \end{align}
 %\end{equation}
 
-This makes sense of course, the main point here is to take into account that the $n$ values of $1,1,2$, $1,2,1$, and
+The main point here is to take into account that the $n$ values of $1,1,2$, $1,2,1$, and
 $2,1,1$ will produce identical results. What this means is that there will be three eigenvalues for the second energy level, as
 there are three arrangements that produce the same energy level. This phenomenon
 occurs whenever the set of three $n$ value results in $(n_x, n_y, n_z)$ being equal to another set. 
-Additionally, iterating through the possible combinations it what may appear to be a `logical' manner does not necessarily result
+Additionally, iterating through the possible combinations in what may appear to be a `logical' manner does not necessarily result
 in the sequential energy levels. This is apparent in the example of $2,2,2$  which results in a
 higher energy level ($12\alpha$) than $1,1,3$ (or any permutation of that) which results in $11\alpha$.
 
@@ -1520,7 +1527,7 @@ Knowing that the number of samples per dimension $N$ will affect the accuracy, w
 the lowest ten eigenvalues for an increasing $N$. This produces a set of ten eigenvalues for each value of $N$ tested. 
 We then normalize each set of eigenvalues so that the lowest energy level will
 conform to what we know in equation \ref{Esubn}. Lastly, for each set of eigenvalues we calculate the mean percent error
-from the target (which is the set of values in equation \ref{first10}.
+from the target (which is the set of values in equation \ref{first10}).
 
 \begin{figure}
 \centering
@@ -1546,9 +1553,9 @@ to plot the computed value and see how it compares with what we have in equation
 The results in figure \ref{MconvergePlot} do not show the type of convergence that we would expect from 
 our model. This led to investigation of what the root cause of this slow convergence could be. At first
 we toyed with the boundary conditions (especially the corners of the kinetic energy matrix) in the hopes
-that a better boundary condition in our model would lead to a faster convergence. These experiments often lead to
+that a better boundary condition in our model would have led to a faster convergence. These experiments often lead to
 unreasonable results that were further from our analytical solution than the results shown in figure \ref{MconvergePlot}.
-We did however stumble upon a paper that suggested eliminating the boundary points from the matrix (making the kinetic
+We did, however, stumble upon a paper that suggested eliminating the boundary points from the matrix (making the kinetic
 energy matrix have the dimensions $(N-1)^3 \times (N-1)^3$) \cite{datta}. While initially finding this to be a peculiar 
 suggestion we heeded the advice.
 
@@ -1573,12 +1580,12 @@ the quantum dot.
 
 \subsection{What are we looking for?}
 As mentioned in section \ref{eigenvalueproblems} the real eigenvalues of the Hamiltonian matrix represent the discrete 
-energy levels of the quantum dot. When the electric field increases and changes the properties of the potential well
+energy levels of the quantum dot. When the electric field increases and changes the properties of the potential well,
 the relative difference between these energy levels changes. Therefore, when the particle drops from one energy level
 to another, releasing the energy as light, the energy released is dependent on the difference between the two energy levels.
 Because of what is observed in equation \ref{einsteinHyp}, which relates the wavelength of light to its energy, the changing
 difference between energy levels will result in changing the frequency of the light emitted. Certain geometries may have an 
-affect on the rate at which the differences in energy change. If the differences changed `faster' for shape $A$ than shape $B$
+affect on the rate at which the differences in energy change. If the differences changed `faster' for shape $A$ than shape $B$,
 an equal change in the electric field would cause a greater change in the frequency emitted by $A$. This is illustrated in 
 figure \ref{deltaE}
 
@@ -1586,7 +1593,7 @@ figure \ref{deltaE}
 \centering
 \subfloat[Shape $A$]{\includegraphics[scale=0.60]{figures/deltaE2.eps}}
 \subfloat[Shape $B$]{\includegraphics[scale=0.60]{figures/deltaE1.eps}}
-\caption{While the $\Delta E$ is the same for both shapes, shape $A$ has a greater change in frequency}
+\caption{While the $\Delta E$ is the same for both shapes, shape $A$ has a greater $\Delta V$}
 \label{deltaE}
 \end{figure}
 
@@ -1621,7 +1628,7 @@ The cylinder was defined as having its end points at $(.1, .5, .5)$ and $(.9, .5
 Because the length of the cylinder is defined along the x-axis it makes sense that an electric field in the x direction
 would have such a great effect on the properties of the cylinder QD. 
 
-Lastly we have the sphere, the simplest to define. This sphere was defined at the center of the sample cube with a radius of
+Lastly we have the sphere; the simplest to define. This sphere was defined at the center of the sample cube with a radius of
 $.45$.  
 
 \begin{figure}[!h]
@@ -1633,8 +1640,8 @@ $.45$.
 \end{figure}
 
 Once again, the value of the lowest eigenvalue is very similar to that of the cube and the cylinder. 
-Unlike the cube and the cylinder however, the sphere appears to have an increase in the difference between
-the lowest two energy levels. Additionally it produces what appears to be an almost quadratic response 
+Unlike the cube and the cylinder, however, the sphere appears to have an increase in the difference between
+the lowest two energy levels. Additionally, it produces what appears to be an almost quadratic response 
 with the lower levels of the electric field and then `straightens out' to an apparently linear response. 
 
 
@@ -1662,8 +1669,8 @@ While these setbacks were eventually overcome, precious time was used and wasted
 ultimately had no meaning. 
 
 As far as the computational resources were concerned, there was not much to be done other than attempt to make due with 
-the facilities at hand. Even with the use of sparse matrix representations the memory usage was incredibly high. A single run
-with an $N$ value of $50$ would often use over 15GB of RAM. While there is a general purpose server open to taught MSc 
+the facilities at hand. Even with the use of sparse matrix representations, the memory usage was incredibly high. A single run
+with an $N$ value of $50$ would often use over $15$GB of RAM. While there is a general purpose server open to taught MSc 
 students\footnote{milan.cs.york.ac.uk} it is designated for 'light use' by the departmental support team \cite{support}. 
 Nevertheless, we would use the server when usage was low and would be less likely to interfere with other students' access.
 
@@ -1679,11 +1686,62 @@ the implementation to ensure that one never had to look far down the list to fin
 illustrated by figures \ref{} and \ref{} were not possible on the student server and were only able to be completed due to
 the kindness of Jan Staunton who has access to a computing grid. 
 
+As for the implementation itself, there were a few decisions that, with hindsight, may have had better alternatives. For example,
+in the final days of completion it was noticed that while a rectangular prism had to be defined along the axis and then rotated, 
+a cylinder could be defined completely independently of the axis. It would have made more logical sense to implement
+both of these primitives in a similar manner. It would actually reduce the number of parameters required when defining
+a cylinder as a second center-line point would be unnecessary to determine the orientation. However, this could be considered
+a future optimization for subsequent implementations. 
+
 These obstacles aside, we feel that the project lays a good foundation for further work to be done in exploring the 
-possible benefits of different QD geometries. 
+possible benefits of different QD geometries.
 
 \section{Further Work}
+This project has laid out a framework with which arbitrarily shaped quantum dots can be modeled and analyzed. The properties
+of the primitives themselves may not sufficiently represent the possible electrical properties of different geometries. Therefore,
+it could be quite enlightening to use these primitives in order to explore the possible advantages of novel shapes. The main 
+issue with this idea is determining what shapes to try. As there are an enormous number of possible permutations and combinations
+of these primitives, it would be daunting and possibly futile to attempt to explore that search space without the aid of 
+some mechanism. 
 
+\subsection{Evolving Shapes}
+Because the primitives have well defined and finite definitions, it is not out of the question to use some form of their 
+definition as the genotype in an evolutionary algorithm. It is possible that novel shapes could be 
+evolved that otherwise would not have been designed. Differential evolution seems suited to the task as it is particularly
+strong at dealing with continuous variables \cite{evo}. Another possibility is to use genetic programing. By using logical 
+operations on different sets of primitives a simple tree structure could be formed that would define the shape. Using
+a \verb+NOT+ operator would be an elegant way of introducing hollow or concave shapes. 
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{figures/GPidea.eps}
+\caption{A possible GP representation of a shape}
+\end{figure}
+
+These structures could then be manipulated and mutated to create new shapes much in the same way that differential evolution
+searches for solutions. The fitness function could vary depending on the intended application. If a certain frequency of light is
+desired than it would be possible to have a fitness function bases on the eigenvalues being within a certain range. If the goal
+is to have as large a frequency change over a small change in the electric field, having the fitness function based on the 
+slope created by the difference between two energy levels could be sufficient. It is key to note however that the computational
+resources (in both memory and time) required to perform any evolutionary or genetic algorithm using this model as part of the
+fitness function would be 
+prohibitively large without access to top of the line servers or workstations.
+
+\subsection{More efficient implementations}
+The main reason for choosing \verb+MATLAB+ as the platform for this implementation was the ease of memory management 
+and numerical libraries available with \verb+MATLAB+. While the \verb+eigs+ function does work on sparse matrices, it is clear
+that parts of the matrix are expanded in order to perform some of the necessary calculations. While this may be an inevitable 
+part of computing eigenvalues, it may be possible to distribute the task to multiple computers, thus spreading the memory
+burden out to several machines. Determining the feasibility\footnote{Google seems to have a method of accomplishing this, or
+at least approximating this. The PageRank algorithm can be thought of as an eigenvalue problem, and therefor it is likely that 
+Google performs this as a distributed task (they do perform it on the \emph{entire} internet). However, the actual 
+implementation of the 
+PageRank algorithm is currently a trade secret. While this points to a distributed eigenvalue solver being possible, it does not 
+help us think of the implementation.} and implementation of such a distributed computation is likely
+a formidable task and merits its own research. 
+
+ 
 \bibliography{diss}
 
 \end{document}
